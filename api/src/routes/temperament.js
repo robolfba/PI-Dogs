@@ -15,15 +15,37 @@ const responseApi = async () => {
 router.get('/', async (req, res) => {
     const dataApi = await responseApi();
     // de dataApi tengo que filtrar los temperamentos, para despues cargarlos en la tabla Temperament, tener en cuenta que no se repitan
-    try{
-        let miDb = await Temperament.findAll();
-        // SI NO TENGO NADA EN MI DB, LA CARGO
-        if(!miDb.length){
-           let temp = await Temperament.bulkCreate(dataApi);
-           return res.json(temp);
+    const arreglo = [];
+    for (let i = 0; i < dataApi.length; i++) {
+        if (dataApi[i].temperament) {
+            // Separo las palabras con split y las guardo en un array de strings
+            let palabrasSeparadas = (dataApi[i].temperament).split(', ');
+            // Pusheo cada arreglo para despues agregar todo a mi tabla Temperament
+            arreglo.push(palabrasSeparadas);
         }
     }
-    catch(error){
-        res.send(error);
+    // Unifico todo a un unico arreglo
+    const arregloDeStrings = arreglo.flat();
+    // Elimino las palabras repetidas aplicando el Set
+
+    const arregloDeStringsSinRepeticiones = new Set(arregloDeStrings);
+    let arr = Array.from(arregloDeStringsSinRepeticiones);
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = { name: arr[i]};
+    }
+
+    try {
+        let miDb = await Temperament.findAll();
+        // SI NO TENGO NADA EN MI DB, LA CARGO
+        if (!miDb.length) {
+            let temp = await Temperament.bulkCreate(arr);
+            return res.json(temp);
+        }
+        else {
+            return res.json(miDb);
+        }
+    }
+    catch (error) {
+        return res.send(error);
     }
 });

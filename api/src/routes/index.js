@@ -12,5 +12,4 @@ const router = Router();
 router.use('/dogs', dogs);
 router.use('/temperament', temperament);
 
-
 module.exports = router;
