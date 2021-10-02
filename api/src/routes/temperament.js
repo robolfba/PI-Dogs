@@ -14,26 +14,26 @@ const responseApi = async () => {
 
 router.get('/', async (req, res) => {
     const dataApi = await responseApi();
-    // de dataApi tengo que filtrar los temperamentos, para despues cargarlos en la tabla Temperament, tener en cuenta que no se repitan
+    // De dataApi tengo que filtrar los temperamentos, para despues cargarlos en la tabla Temperament
     const arreglo = [];
     for (let i = 0; i < dataApi.length; i++) {
         if (dataApi[i].temperament) {
-            // Separo las palabras con split y las guardo en un array de strings
+            // Separo las palabras y las guardo en un array de strings
             let palabrasSeparadas = (dataApi[i].temperament).split(', ');
             // Pusheo cada arreglo para despues agregar todo a mi tabla Temperament
             arreglo.push(palabrasSeparadas);
         }
     }
-    // Unifico todo a un unico arreglo
+    // Unifico todo a en unico arreglo
     const arregloDeStrings = arreglo.flat();
     // Elimino las palabras repetidas aplicando el Set
-
     const arregloDeStringsSinRepeticiones = new Set(arregloDeStrings);
+    // Lo convierto en arreglo
     let arr = Array.from(arregloDeStringsSinRepeticiones);
+    // Agrego un objeto por cada posicion del arreglo, definiendo el name de cada uno
     for (let i = 0; i < arr.length; i++) {
-        arr[i] = { name: arr[i]};
+        arr[i] = { name: arr[i] };
     }
-
     try {
         let miDb = await Temperament.findAll();
         // SI NO TENGO NADA EN MI DB, LA CARGO

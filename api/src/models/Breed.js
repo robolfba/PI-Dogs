@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
     },
     image:{
       type: DataTypes.STRING,
-      allowNull:false,
+      // allowNull:false,
     },
     height: {
       type: DataTypes.STRING,
@@ -30,5 +30,5 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       // allowNull: false,
     },
-  });
+  }, { timestamps: false });
 };

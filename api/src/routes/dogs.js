@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
 const { API_KEY } = process.env;
-// ME TRAIGO LAS TABLAS CREADAS EN LA DB (QUE NECESITO ACA)
+// ME TRAIGO LAS TABLAS CREADAS EN LA DB 
 const { Breed, Temperament, BreedTemperaments } = require('../db');
 // AUN NO ME TRAJE OPERADORES DE SEQUALIZE, PORQUE TODAVIA NO LOS NECESITE
 module.exports = router;
@@ -49,16 +49,15 @@ router.get('/', async (req, res) => {
     }
     // -----------> Si no hay "name"...
     try {
-        // Traigo el contenido de miDb y la guardo en una constante
+        // Traigo el contenido de miDb 
         const miDb = await Breed.findAll({
-            attributes: ["name", "image"],
+            attributes: ["name"],
             include: {
                 model: Temperament,
-                attributes: ['name']
+                // attributes: ['name']
             }
         });
-        console.log('midb------------->', miDb);
-        // Traigo el contenido de la API externa y la guardo en una constante
+        // Traigo el contenido de la API externa
         const respuestaApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
         const miApi = [];
         for (let i = 0; i < respuestaApi.data.length; i++) {
@@ -69,7 +68,7 @@ router.get('/', async (req, res) => {
             }
             miApi.push(obj);
         }
-        // Concateno las razas en miDb con las de la API para retornarlas
+        // Concateno las razas en miDb con las de la API y las retornarlas
         const todaLaData = miDb.concat(miApi);
         return res.json(todaLaData);
     }
@@ -85,8 +84,8 @@ router.get('/:id', async (req, res) => {
     //Incluir los temperamentos asociados
     const { id } = req.params;
     if (id) {
+        // Si el id corresponde a la DB
         if (id.includes('-')) {
-            // El id corresponde a la DB
             try {
                 const breedDb = await Breed.findOne({
                     where:{id:id},
@@ -99,7 +98,7 @@ router.get('/:id', async (req, res) => {
             }
         }
         else {
-            // El id corresponde a la API
+            // Si el id corresponde a la API
             try {
                 const respuestaApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
                 const breedApi = respuestaApi.data.find(b => b.id === parseInt(id));
