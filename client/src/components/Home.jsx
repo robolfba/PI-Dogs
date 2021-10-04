@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getBreeds } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
+import Nav from './Nav';
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -20,21 +21,22 @@ export default function Home() {
     }
     return (
         <div>
-            <Link to='/dogs'>No se que poner aca</Link>
-            <h1>AGUANTEN LOS PERROS</h1>
+            <Nav />
             <button onClick={(e) => handleClick(e)}>Recargar razas</button>
             <div>
-                <select>
+                {/* <select>
                     <option value='asc'>Asc</option> 
                     <option value='desc'>Desc</option>
-                </select>
-                {allBreeds?.map((e) => {
-                    return (
-                        <Link to={'/dogs/' + e.id}>
+                </select> */}
+                {
+                    allBreeds && allBreeds.map((e) => {
+                        return (
+                            // <Link to={'/dogs/' + e.id}>
                             <Card name={e.name} image={e.image} temperaments={e.temperaments} key={e.id} />
-                        </Link>
-                    )
-                })}
+                            // </Link>
+                        )
+                    })
+                }
             </div>
         </div>
     )

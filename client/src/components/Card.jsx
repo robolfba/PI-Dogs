@@ -1,10 +1,12 @@
 import React from 'react';
+import notfound from '../img/notfound.png';
 
 export default function Card({name, image, temperaments}){
     return (
         <div>
             <h3>{name}</h3>
-            <img src={image} alt='not found' width="200px" height="250px"/>
+            <img src={image?image:notfound} alt='not found' width="220px" height="250px"/>
+            {/* <p>{temperaments}</p> */}
         </div>
     )
 }
