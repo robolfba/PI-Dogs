@@ -15,13 +15,16 @@ router.get('/', async (req, res) => {
         try {
             // Busco dentro de miDb, razas que incluyan "name" y las guardo en una constante
             const miDb = await Breed.findAll({
-                attributes: ["name", "image"], // No esta temperament porque no lo tengo en el modelo Breed
+                attributes: ["name"], 
                 where: {
                     name: name
                 },
                 include: {
                     model: Temperament,
-                    attributes: ['name']
+                    attributes: ['name'],
+                    through :{
+                        attributes:[],
+                    }
                 }
             });
             // Busco dentro de la API externa razas que incluyan "name" y las guardo en otra constante
@@ -29,7 +32,7 @@ router.get('/', async (req, res) => {
             const respuestaApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
             const miApi = [];
             for (let i = 0; i < respuestaApi.data.length; i++) {
-                if (respuestaApi.data[i].name.includes(name)) {
+                if (respuestaApi.data[i].name.toLowerCase().includes(name.toLowerCase())) {
                     let obj = {
                         name: respuestaApi.data[i].name,
                         image: respuestaApi.data[i].image.url,
@@ -54,7 +57,10 @@ router.get('/', async (req, res) => {
             attributes: ["name"],
             include: {
                 model: Temperament,
-                // attributes: ['name']
+                attributes: ['name'],
+                through :{
+                    attributes:[],
+                }
             }
         });
         // Traigo el contenido de la API externa
@@ -68,7 +74,7 @@ router.get('/', async (req, res) => {
             }
             miApi.push(obj);
         }
-        // Concateno las razas en miDb con las de la API y las retornarlas
+        // Concateno las razas de miDb con las de la API y las retorno
         const todaLaData = miDb.concat(miApi);
         return res.json(todaLaData);
     }
@@ -88,8 +94,8 @@ router.get('/:id', async (req, res) => {
         if (id.includes('-')) {
             try {
                 const breedDb = await Breed.findOne({
-                    where:{id:id},
-                    include:{model:Temperament}                      
+                    where: { id: id },
+                    include: { model: Temperament }
                 });
                 return res.json(breedDb);
             }

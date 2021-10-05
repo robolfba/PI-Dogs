@@ -6,22 +6,31 @@ module.exports = router;
 
 router.post('/', async (req, res) => {
     // Recibo datos del formulario para crear raza a traves del body
-    const { name, height, weight, yearsOfLife, temperaments } = req.body;
+    const { name, height, weight, yearsOfLife, temperament } = req.body;
     // Chequeo que los campos obligatorios esten completos, sino retorno un msj de error
     if (!name || !weight || !height) {
         return res.send('Faltan datos!');
     }
     try {
         const newBreed = await Breed.create({
+            // where:{
+            //     name:name
+            // },
             name,
             height,
             weight,
             yearsOfLife
         });
-        await newBreed.addTemperaments(temperaments); // Vincula la raza con el/los temperamento/s
-        return res.send('Creado con exito!');
+        // Los temperamentos los voy a encontrar en la tabla (pre cargada) de Temperament
+        // const temperamentDb = await Temperament.findAll({
+        //     where: { name: temperament}
+        // })
+
+        await newBreed.addTemperaments(temperament); // Vincula la raza con el/los temperamento/s
+        console.log('Creado con exito!');
+        return res.json(newBreed);
     }
     catch (error) {
-        res.send('No creado');
+        return res.send('No creado');
     }
 });

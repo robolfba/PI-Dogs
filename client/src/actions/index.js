@@ -9,16 +9,16 @@ export const GET_BREED_BY_NAME = 'GET_BREED_BY_NAME';
  */
 export function getBreeds() {
     return async function (dispatch) {
-        try {
+        // try {
             var json = await axios.get("http://localhost:3001/dogs");
             return dispatch({
                 type: GET_BREEDS,
                 payload: json.data,
             })
-        }
-        catch (error) {
-            console.log(error);
-        }
+        // }
+        // catch (error) {
+        //     console.log(error);
+        // }
     }
 }
 
