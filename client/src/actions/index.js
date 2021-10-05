@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_BREEDS = 'GET_BREEDS';
 export const GET_BREED_BY_NAME = 'GET_BREED_BY_NAME';
+export const FILTER_BREEDS = 'FILTER_BREEDS';
 
 /**
  * Esta funcion hace la consulta al localhost 
@@ -34,5 +35,13 @@ export function getBreedByName(name) {
             type: GET_BREED_BY_NAME,
             payload: json.data,
         })
+    }
+}
+
+export function filterBreeds(payload){
+    console.log('payload filterBreeds---->',payload);
+    return {
+        type: FILTER_BREEDS,
+        payload
     }
 }

@@ -10,12 +10,12 @@ export default function Paged({ breedsPerPage, allBreeds, paged }) {
             <nav>
                 <ul>
                     {pageNumber && pageNumber.map(number => {
-                        <li key={number}>
-                            <a href='' onClick={() => paged(number)}> {number} </a>
+                        return <li key={number}>
+                            <a href='' key={number} onClick={() => paged(number)}> {number} </a>
                         </li>
                     })}
                 </ul>
-            </nav> 
+            </nav>
         </div>
     )
 }

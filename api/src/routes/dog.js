@@ -6,9 +6,9 @@ module.exports = router;
 
 router.post('/', async (req, res) => {
     // Recibo datos del formulario para crear raza a traves del body
-    const { name, height, weight, yearsOfLife, temperament } = req.body;
+    const { name, height_min, height_max, weight_min, weight_max, yearsOfLife, temperament } = req.body;
     // Chequeo que los campos obligatorios esten completos, sino retorno un msj de error
-    if (!name || !weight || !height) {
+    if (!name || !height_min || !height_max|| !weight_min || !weight_max) {
         return res.send('Faltan datos!');
     }
     try {
@@ -17,8 +17,8 @@ router.post('/', async (req, res) => {
             //     name:name
             // },
             name,
-            height,
-            weight,
+            height: `${height_min} - ${height_max} cm`,
+            weight: `${weight_min} - ${weight_max} kg`,
             yearsOfLife
         });
         // Los temperamentos los voy a encontrar en la tabla (pre cargada) de Temperament

@@ -15,15 +15,15 @@ router.get('/', async (req, res) => {
         try {
             // Busco dentro de miDb, razas que incluyan "name" y las guardo en una constante
             const miDb = await Breed.findAll({
-                attributes: ["name"], 
+                attributes: ["name", 'weight', 'id'],
                 where: {
                     name: name
                 },
                 include: {
                     model: Temperament,
                     attributes: ['name'],
-                    through :{
-                        attributes:[],
+                    through: {
+                        attributes: [],
                     }
                 }
             });
@@ -37,6 +37,7 @@ router.get('/', async (req, res) => {
                         name: respuestaApi.data[i].name,
                         image: respuestaApi.data[i].image.url,
                         temperament: respuestaApi.data[i].temperament,
+                        id: respuestaApi.data[i].id,
                     }
                     miApi.push(obj);
                 }
@@ -54,12 +55,12 @@ router.get('/', async (req, res) => {
     try {
         // Traigo el contenido de miDb 
         const miDb = await Breed.findAll({
-            attributes: ["name"],
+            attributes: ["name", 'weight', 'id'],
             include: {
                 model: Temperament,
                 attributes: ['name'],
-                through :{
-                    attributes:[],
+                through: {
+                    attributes: [],
                 }
             }
         });
@@ -71,6 +72,8 @@ router.get('/', async (req, res) => {
                 name: respuestaApi.data[i].name,
                 image: respuestaApi.data[i].image.url,
                 temperament: respuestaApi.data[i].temperament,
+                id: respuestaApi.data[i].id,
+                weight: respuestaApi.data[i].weight.metric,
             }
             miApi.push(obj);
         }

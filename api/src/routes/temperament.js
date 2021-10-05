@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
     }
     try {
         let miDb = await Temperament.findAll();
+
         // SI NO TENGO NADA EN MI DB, LA CARGO
         if (!miDb.length) {
             let temp = await Temperament.bulkCreate(arr);
