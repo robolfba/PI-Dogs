@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBreeds, filterBreeds } from '../actions';
+import { getBreeds, filterBreeds, orderByName, getTemperaments } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Nav from './Nav';
@@ -8,9 +8,11 @@ import Paged from './Paged';
 
 export default function Home() {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); // Esto es lo mismo que hacer mapDispatchToProps()
     const allBreeds = useSelector((state) => state.breeds); // Esto es lo mismo que hacer el mapStateToProps()
+    const allTemperaments = useSelector((state) => state.temperaments); // Esto es lo mismo que hacer el mapStateToProps()
 
+    const [orden, setOrden] = useState('');
     const [currentPage, setCurrentPage] = useState(1); // Pagina actual, comienza en 1
     const [breedsPerPage, setBreedsPerPage] = useState(8); // Cuantas razas tengo por página, en este caso 8
     const indexOfLastBreed = currentPage * breedsPerPage; // Indice de la ultima raza
@@ -21,7 +23,8 @@ export default function Home() {
     }
 
     useEffect(() => {
-        dispatch(getBreeds());  // Hacer este dispatch, es lo mismo que hacer mapDispatchToProps()
+        dispatch(getBreeds());
+        dispatch(getTemperaments());
     }, [dispatch])              // Lo que se incluye dentro de [] es basicamente de lo que depende este useEffect en 
     // en el caso de no depender de nada, se lo pasa vacio.
 
@@ -34,10 +37,20 @@ export default function Home() {
         dispatch(filterBreeds(e.target.value));
     }
 
+    function handleOrderByName(e) {
+        e.preventDefault();
+        dispatch(orderByName(e.target.value));
+        setCurrentPage(1); // Modifico la pagina actual
+        setOrden(`Ordenado ${e.target.value}`) // Al modificar el estado local, se vuelve a renderizar
+    }
+
     return (
         <div>
+
             <Nav />
-            <button onClick={(e) => handleClick(e)}>Recargar razas</button>
+            
+            <button onClick={e => handleClick(e)}>Recargar razas</button>
+
             {/* //------------------------------------------------------------- Filtros */}
             {/* // Filtro por raza */}
             <select onChange={e => handleFilterBreeds(e)}>
@@ -45,24 +58,31 @@ export default function Home() {
                 <option value='Created'>Created</option>
                 <option value='Existing'>Existing</option>
             </select>
+
             {/* // Filtro por temperamento */}
             <select>
                 <option value='AllTemperaments'>All temperaments</option>
-                {/* // Aca tengo que mapear un <option> por cada temperamento que tiene la tabla Temperament */}
-                <option value='Created'>Created</option>
-                <option value='Existing'>Existing</option>
+                {
+                    allTemperaments && allTemperaments.map(e => {
+                        return <option value={e.name} key={e.id}>{e.name}</option>
+                    })
+                }
             </select>
+
             {/* //------------------------------------------------------------- Ordenados */}
             {/* // Orden alfabetico */}
-            <select>
-                <option value='Asc'>Ascendente</option>
-                <option value='Desc'>Descendente</option>
+            <select onClick={e => handleOrderByName(e)}>
+                <option value='asc'>Ascendente</option>
+                <option value='desc'>Descendente</option>
             </select>
+
             {/* // Orden por peso */}
             <select>
                 <option value='MenorMayor'>Menos a mas peso</option>
                 <option value='MayorMenor'>Mas a menos peso</option>
             </select>
+            {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+            
             <div>
                 {currentBreeds && currentBreeds.map((e) => {
                     if (e.temperament) { // Si es de la API
