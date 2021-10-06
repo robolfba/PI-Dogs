@@ -13,11 +13,11 @@ export const ORDER_BY_NAME = 'ORDER_BY_NAME';
  */
 export function getBreeds() {
     return async function (dispatch) {
-            const json = await axios.get("http://localhost:3001/dogs");
-            return dispatch({
-                type: GET_BREEDS,
-                payload: json.data,
-            })
+        const json = await axios.get("http://localhost:3001/dogs");
+        return dispatch({
+            type: GET_BREEDS,
+            payload: json.data,
+        })
     }
 }
 
@@ -26,24 +26,29 @@ export function getBreeds() {
  * @param {string} name Es el nombre de la raza a buscar
  * @returns Devuelve las razas que matcheen con name. (API + DB)
  */
-export function getBreedByName(name) { 
+export function getBreedByName(name) {
     return async function (dispatch) {
-        var json = await axios.get("http://localhost:3001/dogs?name=" + name);
-        return dispatch({
-            type: GET_BREED_BY_NAME,
-            payload: json.data,
-        })
+        // try {
+            var json = await axios.get("http://localhost:3001/dogs?name=" + name);
+            return dispatch({
+                type: GET_BREED_BY_NAME,
+                payload: json.data,
+            })
+        // }
+        // catch (error) {
+        //     console.log(error);
+        // }
     }
 }
 
-export function filterBreeds(payload){
+export function filterBreeds(payload) {
     return {
         type: FILTER_BREEDS,
         payload
     }
 }
 
-export function orderByName(payload){
+export function orderByName(payload) {
     return {
         type: ORDER_BY_NAME,
         payload
@@ -52,15 +57,16 @@ export function orderByName(payload){
 
 export function getTemperaments() {
     return async function (dispatch) {
-            const json = await axios.get("http://localhost:3001/temperament");
-            return dispatch({
-                type: GET_TEMPERAMENTS,
-                payload: json.data,
-            })
+        const json = await axios.get("http://localhost:3001/temperament");
+        return dispatch({
+            type: GET_TEMPERAMENTS,
+            payload: json.data,
+        })
     }
 }
 
-export function filterTemperaments(payload){
+export function filterTemperaments(payload) {
+    console.log('ESTO ES LA ACTION------>', payload);
     return {
         type: FILTER_TEMPERAMENTS,
         payload

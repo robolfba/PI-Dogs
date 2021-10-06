@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBreeds, filterBreeds, orderByName, getTemperaments } from '../actions';
+import { getBreeds, filterBreeds, orderByName, getTemperaments,filterTemperaments } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Nav from './Nav';
@@ -44,11 +44,13 @@ export default function Home() {
         setOrden(`Ordenado ${e.target.value}`) // Al modificar el estado local, se vuelve a renderizar
     }
 
+    function handleFilterTemperaments(e) {
+        dispatch(filterTemperaments(e.target.value));
+    }
+
     return (
         <div>
-
             <Nav />
-            
             <button onClick={e => handleClick(e)}>Recargar razas</button>
 
             {/* //------------------------------------------------------------- Filtros */}
@@ -60,7 +62,7 @@ export default function Home() {
             </select>
 
             {/* // Filtro por temperamento */}
-            <select>
+            <select onChange={e=> handleFilterTemperaments(e)} >
                 <option value='AllTemperaments'>All temperaments</option>
                 {
                     allTemperaments && allTemperaments.map(e => {
@@ -82,7 +84,7 @@ export default function Home() {
                 <option value='MayorMenor'>Mas a menos peso</option>
             </select>
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-            
+
             <div>
                 {currentBreeds && currentBreeds.map((e) => {
                     if (e.temperament) { // Si es de la API
