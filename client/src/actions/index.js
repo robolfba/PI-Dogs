@@ -6,6 +6,7 @@ export const GET_BREED_BY_NAME = 'GET_BREED_BY_NAME';
 export const FILTER_BREEDS = 'FILTER_BREEDS';
 export const FILTER_TEMPERAMENTS = 'FILTER_BREEDS';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const POST_BREED = 'POST_BREED';
 
 /**
  * Esta funcion hace la consulta al localhost 
@@ -29,7 +30,7 @@ export function getBreeds() {
 export function getBreedByName(name) {
     return async function (dispatch) {
         // try {
-            var json = await axios.get("http://localhost:3001/dogs?name=" + name);
+            const json = await axios.get("http://localhost:3001/dogs?name=" + name);
             return dispatch({
                 type: GET_BREED_BY_NAME,
                 payload: json.data,
@@ -70,5 +71,15 @@ export function filterTemperaments(payload) {
     return {
         type: FILTER_TEMPERAMENTS,
         payload
+    }
+}
+
+export function postBreed(payload){
+    return async function(dispatch){
+        const json = await axios.post("http://localhost:3001/dog",payload);
+        return dispatch({
+            type: POST_BREED,
+            payload:json.data
+        })
     }
 }

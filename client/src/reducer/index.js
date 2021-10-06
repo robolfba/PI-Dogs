@@ -1,4 +1,4 @@
-import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS } from '../actions/';
+import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS,POST_BREED } from '../actions/';
 
 const initialState = {
     breeds: [],
@@ -68,25 +68,37 @@ function rootReducer(state = initialState, action) {
             //            let aux = allTemperaments.filter(e => {return (e.temperament && e.temperament.includes(action.payload))||(e.temperaments && e.temperaments.some(b => b.name === action.payload))  })
             const allTemperaments = state.allBreeds;
             let filtered = [];
-            for (let i = 0; i < allTemperaments.length; i++) {
-                //Si es de la API ---> temperament:"Aloof, Clownish,..."
-                if (allTemperaments[i].temperament && allTemperaments[i].temperament.includes(action.payload)) {
-                    filtered.push(allTemperaments[i]);
-                }
-                // Si es de la DB --> "temperaments":[{name:"Brave"},{name:"algo"},{...}]
-                else if (allTemperaments[i].temperaments) {
-                    for (let j = 0; j < allTemperaments[i].temperaments.length; j++) {
-                        if (allTemperaments[i].temperaments[j].name === action.payload) {
-                            filtered.push(allTemperaments[i]);
+            if (action.payload === 'AllTemperaments') {
+                filtered = [...allTemperaments];
+            }
+            else {
+                for (let i = 0; i < allTemperaments.length; i++) {
+                    //Si es de la API ---> temperament:"Aloof, Clownish,..."
+                    if (allTemperaments[i].temperament && allTemperaments[i].temperament.includes(action.payload)) {
+                        filtered.push(allTemperaments[i]);
+                    }
+                    // Si es de la DB --> "temperaments":[{name:"Brave"},{name:"algo"},{...}]
+                    else if (allTemperaments[i].temperaments) {
+                        for (let j = 0; j < allTemperaments[i].temperaments.length; j++) {
+                            if (allTemperaments[i].temperaments[j].name === action.payload) {
+                                filtered.push(allTemperaments[i]);
+                                break;
+                            }
                         }
                     }
                 }
             }
-            console.log('esto es el filtered--->',filtered);
+            console.log('esto es el filtered--->', filtered);
+            // ACA ESTARIA DEVOLVIENDO UN ARREGLO DE RAZAS QUE MATCHEARON CON CON EL TEMPERAMENTO QUE VIENE EN ACTION.PAYLOAD
             return {
                 ...state,
                 breeds: filtered
             }
+            case POST_BREED:
+                return{
+                    ...state,
+                    breeds: [...state.breeds,...action.payload]
+                }
         default:
             return state;
     }

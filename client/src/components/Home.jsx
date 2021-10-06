@@ -53,7 +53,7 @@ export default function Home() {
             <Nav />
             <button onClick={e => handleClick(e)}>Recargar razas</button>
 
-            {/* //------------------------------------------------------------- Filtros */}
+            {/* //------------------------------------------------------------- Filtrados */}
             {/* // Filtro por raza */}
             <select onChange={e => handleFilterBreeds(e)}>
                 <option value='AllBreeds'>All breeds</option>
@@ -73,7 +73,7 @@ export default function Home() {
 
             {/* //------------------------------------------------------------- Ordenados */}
             {/* // Orden alfabetico */}
-            <select onClick={e => handleOrderByName(e)}>
+            <select onChange={e => handleOrderByName(e)}>
                 <option value='asc'>Ascendente</option>
                 <option value='desc'>Descendente</option>
             </select>
@@ -91,7 +91,7 @@ export default function Home() {
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)
                     }
                     else if (e.temperaments) { // Si es de la DB
-                        let aux = e.temperaments[0].name;
+                        let aux;
                         for (let i = 0; i < e.temperaments.length; i++) {
                             aux = aux + ", " + e.temperaments[i].name;
                         }

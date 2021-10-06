@@ -9,7 +9,7 @@ export default function Nav() {
             <Link to='/home'>
                 <span>HOME</span>
             </Link>
-            <Link to='/detail'>
+            <Link to='/create'>
                 <span>CREATE</span>
             </Link>
             
