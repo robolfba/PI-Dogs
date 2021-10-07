@@ -1,4 +1,5 @@
 import React from "react";
+import style from './styles/Paged.module.css';
 
 export default function Paged({ breedsPerPage, allBreeds, paged }) {
     const pageNumber = [];
@@ -8,10 +9,10 @@ export default function Paged({ breedsPerPage, allBreeds, paged }) {
     return (
         <div>
             <nav>
-                <ul>
+                <ul className={style.contenedor} >
                     {pageNumber && pageNumber.map(number => {
-                        return <li key={number}>
-                            <button key={number} onClick={() => paged(number)}> {number} </button>
+                        return <li className={style.elemento} key={number}>
+                            <button className={style.boton} key={number} onClick={() => paged(number)}> {number} </button>
                         </li>
                     })}
                 </ul>

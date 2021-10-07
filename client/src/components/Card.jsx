@@ -1,13 +1,23 @@
 import React from 'react';
 import notfound from '../img/notfound.png';
+import style from './styles/Card.module.css';
 
 export default function Card({ name, image, temperament, weight }) {
     return (
-        <div>
-            <h3>{name}</h3>
-            <img src={image ? image : notfound} alt='not found' width="220px" height="250px" />
-            {<span>{temperament}</span>}
-            {<p>{weight?weight:false}</p>}
+        <div className={style.contenedor}>
+            <img className={style.imagen} src={image ? image : notfound} alt='not found' />
+            <div className={style.columna_texto}>
+                <h5 className={style.nombre}>{name}</h5>
+                <div className={style.temperamento}>
+                    <h6>Temperaments:</h6>
+                    {<span>{temperament}</span>}
+                </div>
+                <div className={style.peso}>
+                    <h6>Weight:</h6>
+                    {<span>{weight ? weight : false}</span>}
+                </div>
+            </div>
+
         </div>
     )
 }

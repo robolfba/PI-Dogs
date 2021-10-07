@@ -1,0 +1,22 @@
+.contenedor{
+    background-color:#EBF5DF;
+    margin-left: 140px;
+    margin-top: 50px;
+    width: 80vw;
+    height: 120vh;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+.contenedor_paginado{
+    background-color:#D4D4AA;
+    margin-left: 140px;
+   /*  margin-top: 50px; */
+    width: 80vw;
+    height: 7vh;
+    /* display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap:wrap; */
+}

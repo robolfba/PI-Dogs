@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Card from './Card';
 import Nav from './Nav';
 import Paged from './Paged';
+import style from './styles/Home.module.css';
 
 export default function Home() {
 
@@ -85,7 +86,7 @@ export default function Home() {
             </select>
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
-            <div>
+            <div className={style.contenedor}>
                 {currentBreeds && currentBreeds.map((e) => {
                     if (e.temperament) { // Si es de la API
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)
@@ -102,7 +103,9 @@ export default function Home() {
                     }
                 })}
             </div>
+            <div className={style.contenedor_paginado}>
             <Paged breedsPerPage={breedsPerPage} allBreeds={allBreeds.length} paged={paged} />
+            </div>
         </div>
     )
 }

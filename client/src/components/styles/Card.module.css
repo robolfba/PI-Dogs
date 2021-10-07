@@ -1,0 +1,38 @@
+.contenedor{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    height: 150px;
+    width: 400px;
+    border-style:groove;
+
+}
+.imagen{
+    display: flex;
+    justify-content: flex-start;
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+}
+.columna_texto{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.nombre{
+    /* display:flex; */
+}
+.temperamento{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.peso{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+span{
+    font-style: italic;
+    font-size: 11px;
+}
