@@ -17,7 +17,7 @@ function validate(input) {
 
 export default function BreedCreate() {
     const dispatch = useDispatch();
-    const history = useHistory();
+  //  const history = useHistory();
     const allTemperaments = useSelector((state) => state.temperaments);
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
@@ -39,7 +39,6 @@ export default function BreedCreate() {
             ...input,
             [e.target.name]: e.target.value
         }))
-        console.log('input del breedCreate--->', input);
     }
 
     function handleSelect(e) {
@@ -51,12 +50,13 @@ export default function BreedCreate() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log('handleSubmit--->', input);
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
         }))
        dispatch(postBreed(input));
+    console.log('input.temperaments (handleSubmit)--->', input.temperaments);
+
         alert('Raza creada con exito!');
         setInput({
             name: '',
@@ -67,7 +67,7 @@ export default function BreedCreate() {
             yearsOfLife: '',
             temperaments: []
         })
-        history.push('/home');
+     //   history.push('/home');
     }
 
     function handleDelete(temp) {
@@ -147,7 +147,7 @@ export default function BreedCreate() {
                     <select onChange={e => handleSelect(e)}>
                         {
                             allTemperaments.map(e => {
-                                return <option value={e.name}>{e.name}</option>
+                                return <option key={e.id} value={e.name}>{e.name}</option>
                             })
                         }
                     </select>
@@ -156,8 +156,8 @@ export default function BreedCreate() {
             </form>
             {/* Aca se muestran los temperamentos que se van agregando! */}
             {
-                input.temperaments.map(temp => {
-                    return <div>
+                input.temperaments.map((temp,index) => {
+                    return <div key={index}>
                         <p>{temp}</p>
                         <button onClick={() => handleDelete(temp)}>x</button>
                     </div>

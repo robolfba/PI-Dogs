@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBreeds, filterBreeds, orderByName, getTemperaments,filterTemperaments } from '../actions';
+import { getBreeds, filterBreeds, orderByName, getTemperaments, filterTemperaments } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Nav from './Nav';
@@ -45,7 +45,7 @@ export default function Home() {
     }
 
     function handleFilterTemperaments(e) {
-        dispatch(filterTemperaments(e.target.value));
+        dispatch(filterTemperaments(e.target.nvalue));
     }
 
     return (
@@ -62,7 +62,7 @@ export default function Home() {
             </select>
 
             {/* // Filtro por temperamento */}
-            <select onChange={e=> handleFilterTemperaments(e)} >
+            <select onChange={e => handleFilterTemperaments(e)} >
                 <option value='AllTemperaments'>All temperaments</option>
                 {
                     allTemperaments && allTemperaments.map(e => {
@@ -91,9 +91,9 @@ export default function Home() {
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)
                     }
                     else if (e.temperaments) { // Si es de la DB
-                        let aux;
+                        let aux ;
                         for (let i = 0; i < e.temperaments.length; i++) {
-                            aux = aux + ", " + e.temperaments[i].name;
+                            aux = aux + ', ' + e.temperaments[i].name;
                         }
                         return (<Card name={e.name} image={e.image} temperament={aux} weight={e.weight} key={e.id} />)
                     }

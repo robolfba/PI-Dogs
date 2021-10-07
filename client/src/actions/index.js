@@ -8,37 +8,33 @@ export const FILTER_TEMPERAMENTS = 'FILTER_BREEDS';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_BREED = 'POST_BREED';
 
-/**
- * Esta funcion hace la consulta al localhost 
- * @returns Devuelve todas las razas. (API + DB)
- */
 export function getBreeds() {
     return async function (dispatch) {
-        const json = await axios.get("http://localhost:3001/dogs");
-        return dispatch({
-            type: GET_BREEDS,
-            payload: json.data,
-        })
+        try {
+            const json = await axios.get("http://localhost:3001/dogs");
+            return dispatch({
+                type: GET_BREEDS,
+                payload: json.data,
+            })
+        }
+        catch (error) {
+            console.log('Actions - getBreeds---> ', error);
+        }
     }
 }
 
-/**
- * Esta funcion recibe un "name" que se usa en la ruta, pasandose por query
- * @param {string} name Es el nombre de la raza a buscar
- * @returns Devuelve las razas que matcheen con name. (API + DB)
- */
 export function getBreedByName(name) {
     return async function (dispatch) {
-        // try {
+        try {
             const json = await axios.get("http://localhost:3001/dogs?name=" + name);
             return dispatch({
                 type: GET_BREED_BY_NAME,
                 payload: json.data,
             })
-        // }
-        // catch (error) {
-        //     console.log(error);
-        // }
+        }
+        catch (error) {
+            console.log('Actions - getBreedByName---> ', error);
+        }
     }
 }
 
@@ -58,28 +54,39 @@ export function orderByName(payload) {
 
 export function getTemperaments() {
     return async function (dispatch) {
-        const json = await axios.get("http://localhost:3001/temperament");
-        return dispatch({
-            type: GET_TEMPERAMENTS,
-            payload: json.data,
-        })
+        try {
+            const json = await axios.get("http://localhost:3001/temperament");
+            return dispatch({
+                type: GET_TEMPERAMENTS,
+                payload: json.data,
+            })
+        }
+        catch (error) {
+            console.log('Actions - getTemperaments---> ', error);
+        }
     }
 }
 
 export function filterTemperaments(payload) {
-    console.log('ESTO ES LA ACTION------>', payload);
     return {
         type: FILTER_TEMPERAMENTS,
         payload
     }
 }
 
-export function postBreed(payload){
-    return async function(dispatch){
-        const json = await axios.post("http://localhost:3001/dog",payload);
-        return dispatch({
-            type: POST_BREED,
-            payload:json.data
-        })
+export function postBreed(payload) {
+    return async function (dispatch) {
+        try {
+            await axios.post("http://localhost:3001/dog", payload);
+            console.log('Actions - postBreed---> payload.temperaments', payload.temperaments);
+
+            return dispatch({
+                type: POST_BREED,
+                payload
+            })
+        }
+        catch (error) {
+            console.log('Actions - postBreed---> ', error);
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS,POST_BREED } from '../actions/';
+import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS, POST_BREED } from '../actions/';
 
 const initialState = {
     breeds: [],
@@ -94,11 +94,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 breeds: filtered
             }
-            case POST_BREED:
-                return{
-                    ...state,
-                    breeds: [...state.breeds,...action.payload]
-                }
+        case POST_BREED:
+            return {
+                ...state,
+                breeds: [...state.breeds, action.payload]
+            }
         default:
             return state;
     }

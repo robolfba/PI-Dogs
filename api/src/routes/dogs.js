@@ -2,12 +2,9 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
 const { API_KEY } = process.env;
-// ME TRAIGO LAS TABLAS CREADAS EN LA DB 
 const { Breed, Temperament, BreedTemperaments } = require('../db');
-// AUN NO ME TRAJE OPERADORES DE SEQUALIZE, PORQUE TODAVIA NO LOS NECESITE
 module.exports = router;
 
-// ----------------------------------> RUTAS <-------------------------------------
 router.get('/', async (req, res) => {
     const { name } = req.query;
     // ----------> Si hay "name"
@@ -64,6 +61,7 @@ router.get('/', async (req, res) => {
                 }
             }
         });
+        const miDbRefactorizada = miDb.map(e => e.temperaments.values())
         // Traigo el contenido de la API externa
         const respuestaApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
         const miApi = [];
