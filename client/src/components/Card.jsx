@@ -1,6 +1,7 @@
 import React from 'react';
 import notfound from '../img/notfound.png';
 import style from './styles/Card.module.css';
+import { Link } from 'react-router-dom';
 
 export default function Card({ name, image, temperament, weight }) {
     return (
@@ -16,7 +17,9 @@ export default function Card({ name, image, temperament, weight }) {
                     <h6>Temperaments:</h6>
                     {<span>{temperament}</span>}
                 </div>
-                <button className={style.boton} >View more...</button>
+                <Link to='/detail'>
+                    <button className={style.boton} >View more</button>
+                </Link>
             </div>
 
         </div>

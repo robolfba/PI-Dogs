@@ -52,40 +52,44 @@ export default function Home() {
     return (
         <div className={style.contenedor_general} >
             <Nav />
-            <div className={style.contenedor_filtros} >
-            <button onClick={e => handleClick(e)}>Recargar razas</button>
+            <div className={style.contenedor_filtros_ordenadores} >
+                {/* //------------------------------------------------------------- Filtrados */}
+                <div className={style.contenedor_filtros} >
+                    <button className={style.boton_razas} onClick={e => handleClick(e)}>Reload breeds</button>
+                    {/* // Filtro por raza */}
+                    <select className={style.filtro_razas} onChange={e => handleFilterBreeds(e)}>
+                        <option value='AllBreeds'>All breeds</option>
+                        <option value='Created'>Created</option>
+                        <option value='Existing'>Existing</option>
+                    </select>
 
-            {/* //------------------------------------------------------------- Filtrados */}
-            {/* // Filtro por raza */}
-            <select onChange={e => handleFilterBreeds(e)}>
-                <option value='AllBreeds'>All breeds</option>
-                <option value='Created'>Created</option>
-                <option value='Existing'>Existing</option>
-            </select>
+                    {/* // Filtro por temperamento */}
+                    <select className={style.filtro_temperamento} onChange={e => handleFilterTemperaments(e)} >
+                        <option value='AllTemperaments'>All temperaments</option>
+                        {
+                            allTemperaments && allTemperaments.map(e => {
+                                return <option value={e.name} key={e.id}>{e.name}</option>
+                            })
+                        }
+                    </select>
+                </div>
+                {/* //------------------------------------------------------------- Ordenados */}
+                <div className={style.contenedor_ordenadores} >
+                    {/* // Orden alfabetico */}
+                    <select className={style.orden_alfabetico} onChange={e => handleOrderByName(e)}>
+                        <option value='asc'>Ascendente</option>
+                        <option value='desc'>Descendente</option>
+                    </select>
 
-            {/* // Filtro por temperamento */}
-            <select onChange={e => handleFilterTemperaments(e)} >
-                <option value='AllTemperaments'>All temperaments</option>
-                {
-                    allTemperaments && allTemperaments.map(e => {
-                        return <option value={e.name} key={e.id}>{e.name}</option>
-                    })
-                }
-            </select>
-
-            {/* //------------------------------------------------------------- Ordenados */}
-            {/* // Orden alfabetico */}
-            <select onChange={e => handleOrderByName(e)}>
-                <option value='asc'>Ascendente</option>
-                <option value='desc'>Descendente</option>
-            </select>
-
-            {/* // Orden por peso */}
-            <select>
-                <option value='MenorMayor'>Menos a mas peso</option>
-                <option value='MayorMenor'>Mas a menos peso</option>
-            </select>
+                    {/* // Orden por peso */}
+                    <select className={style.orden_peso}>
+                        <option value='MenorMayor'>Menos a mas peso</option>
+                        <option value='MayorMenor'>Mas a menos peso</option>
+                    </select>
+                </div>
             </div>
+
+
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
             <div className={style.contenedor_cards}>
@@ -94,7 +98,7 @@ export default function Home() {
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)
                     }
                     else if (e.temperaments) { // Si es de la DB
-                        let aux ;
+                        let aux;
                         for (let i = 0; i < e.temperaments.length; i++) {
                             aux = aux + ', ' + e.temperaments[i].name;
                         }
@@ -106,7 +110,7 @@ export default function Home() {
                 })}
             </div>
             <div className={style.contenedor_paginado}>
-            <Paged breedsPerPage={breedsPerPage} allBreeds={allBreeds.length} paged={paged} />
+                <Paged breedsPerPage={breedsPerPage} allBreeds={allBreeds.length} paged={paged} />
             </div>
         </div>
     )

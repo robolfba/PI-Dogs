@@ -7,6 +7,7 @@ export const FILTER_BREEDS = 'FILTER_BREEDS';
 export const FILTER_TEMPERAMENTS = 'FILTER_BREEDS';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_BREED = 'POST_BREED';
+export const GET_DETAIL = 'GET_DETAIL';
 
 export function getBreeds() {
     return async function (dispatch) {
@@ -87,6 +88,21 @@ export function postBreed(payload) {
         }
         catch (error) {
             console.log('Actions - postBreed---> ', error);
+        }
+    }
+}
+export function getDetail(id){
+    return async function (dispatch){
+        try{
+          const json = await axios.get("http://localhost:3001/dogs/"+id);
+
+            return dispatch({
+                type: GET_DETAIL,
+                payload: json.data
+            })
+        }
+        catch(error){
+            console.log('Actions - getDetail---> ', error);
         }
     }
 }

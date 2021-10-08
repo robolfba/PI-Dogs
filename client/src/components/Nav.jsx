@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import { Link } from 'react-router-dom';
 import style from './styles/Nav.module.css'
-import logo from './styles/img/otro.png'
+import logo from './styles/img/breedsgallery.png'
 
 export default function Nav() {
     return (
