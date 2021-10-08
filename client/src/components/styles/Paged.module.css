@@ -20,7 +20,7 @@
 }
 .boton:hover {
     transition: 0.5s;
-    background-color:#E8871E;
+    background-color:#EDB458;
     color:#ffffff;
     cursor:pointer;
 }

@@ -50,8 +50,9 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div className={style.contenedor_general} >
             <Nav />
+            <div className={style.contenedor_filtros} >
             <button onClick={e => handleClick(e)}>Recargar razas</button>
 
             {/* //------------------------------------------------------------- Filtrados */}
@@ -84,9 +85,10 @@ export default function Home() {
                 <option value='MenorMayor'>Menos a mas peso</option>
                 <option value='MayorMenor'>Mas a menos peso</option>
             </select>
+            </div>
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
-            <div className={style.contenedor}>
+            <div className={style.contenedor_cards}>
                 {currentBreeds && currentBreeds.map((e) => {
                     if (e.temperament) { // Si es de la API
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getBreedByName } from '../actions/';
+import style from './styles/SearchBar.module.css'
 
 export default function SearchBar() {
     const dispatch = useDispatch();
@@ -18,14 +19,15 @@ export default function SearchBar() {
     }
 
     return (
-        <div>
+        <div className={style.contenedor}>
             <input
+                className={style.input}
                 type="text"
                 placeholder='Select breed...'
                 value={name}
                 onChange={(e) => handleOnChange(e)}
             />
-            <button type='submit' onClick={e => handleOnSubmit(e)}>Buscar</button>
+            <button className={style.boton} type='submit' onClick={e => handleOnSubmit(e)}></button>
         </div>
     )
 }
