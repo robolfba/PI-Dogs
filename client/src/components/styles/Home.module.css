@@ -1,5 +1,6 @@
 .contenedor{
-    background-color:#EBF5DF;
+    border-radius: 15px;
+    background-color:#ffffff;
     margin-left: 140px;
     margin-top: 50px;
     width: 80vw;
@@ -10,7 +11,8 @@
     flex-wrap:wrap;
 }
 .contenedor_paginado{
-    background-color:#D4D4AA;
+    border-radius: 15px;
+    background-color:#ffffff;
     margin-left: 140px;
    /*  margin-top: 50px; */
     width: 80vw;

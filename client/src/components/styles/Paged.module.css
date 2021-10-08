@@ -9,16 +9,18 @@
     margin-top: 8px;
 }
 .boton {
-    background-color:none;
+    background-color:#ffffff;
     border: none;
-    border-radius: 50%;
-    color:#E8871E;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    color:#000000;
     text-align: center;
     text-decoration: none; 
 }
 .boton:hover {
-    transition: 00.5s;
-    background-color:none;
-    color:#EDB458;
-
+    transition: 0.5s;
+    background-color:#E8871E;
+    color:#ffffff;
+    cursor:pointer;
 }

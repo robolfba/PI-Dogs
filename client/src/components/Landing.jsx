@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import logo from './styles/img/otro.png'
 import style from './styles/Landing.module.css';
 
 
@@ -14,7 +13,6 @@ export default function Landing() {
                     <span>Come and discover all the possible breeds of the most beatifull animal</span>
                     <span>in the world. You will also be able to create your own fantasy breed!</span>
                 </div> */}
-                {/* <img src={logo} alt='algo' className={style.logo} /> */}
                 <Link to='/home'>
                     <button className={style.boton}>View more</button>
                 </Link>
