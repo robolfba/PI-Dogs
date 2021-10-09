@@ -90,12 +90,21 @@ function rootReducer(state = initialState, action) {
                 }
             }
             console.log('esto es el filtered--->', filtered);
-            // ACA ESTARIA DEVOLVIENDO UN ARREGLO DE RAZAS QUE MATCHEARON CON CON EL TEMPERAMENTO QUE VIENE EN ACTION.PAYLOAD
+            // ACA ESTARIA DEVOLVIENDO UN ARREGLO DE RAZAS QUE MATCHEARON CON EL TEMPERAMENTO QUE VIENE EN ACTION.PAYLOAD
             return {
                 ...state,
                 breeds: filtered
             }
         case POST_BREED:
+            // recibo un array de string, donde cada string es un temperamento
+            // entonces, tengo que buscar en temperaments[] cada string y guardar su id 
+            // for(let i = 0; i < action.payload.temperaments.length; i++){
+            //     for(let j = 0; j < state.temperaments.length; j++){
+            //         if(action.payload.temperaments[i] === state.temperaments[j].name){
+            //             action.payload.temperaments[i] = state.temperaments[j].id
+            //         }
+            //     }
+            // }
             return {
                 ...state,
                 breeds: [...state.breeds, action.payload]

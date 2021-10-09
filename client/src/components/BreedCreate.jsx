@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTemperaments,postBreed } from '../actions'; // falta importar postBreed()
+import { getTemperaments, postBreed } from '../actions'; // falta importar postBreed()
 
 function validate(input) {
     let errors = {};
@@ -17,7 +17,7 @@ function validate(input) {
 
 export default function BreedCreate() {
     const dispatch = useDispatch();
-  //  const history = useHistory();
+    const history = useHistory();
     const allTemperaments = useSelector((state) => state.temperaments);
     const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
@@ -54,8 +54,8 @@ export default function BreedCreate() {
             ...input,
             [e.target.name]: e.target.value
         }))
-       dispatch(postBreed(input));
-    console.log('input.temperaments (handleSubmit)--->', input.temperaments);
+        dispatch(postBreed(input));
+        console.log('input.temperaments (handleSubmit)--->', input.temperaments);
 
         alert('Raza creada con exito!');
         setInput({
@@ -67,7 +67,18 @@ export default function BreedCreate() {
             yearsOfLife: '',
             temperaments: []
         })
-     //   history.push('/home');
+
+        // {
+        //     "name": "Postman",
+        //     "height_min": "40",
+        //     "height_max": "78",
+        //     "weight_min": "4",
+        //     "weight_max": "7",
+        //     "yearsOfLife": "13",
+        //     "temperaments": [2,7,1]
+        // }
+
+        history.push('/home');
     }
 
     function handleDelete(temp) {
@@ -147,7 +158,7 @@ export default function BreedCreate() {
                     <select onChange={e => handleSelect(e)}>
                         {
                             allTemperaments.map(e => {
-                                return <option key={e.id} value={e.name}>{e.name}</option>
+                                return <option key={e.id} value={e.id}>{e.name}</option>
                             })
                         }
                     </select>
@@ -156,9 +167,10 @@ export default function BreedCreate() {
             </form>
             {/* Aca se muestran los temperamentos que se van agregando! */}
             {
-                input.temperaments.map((temp,index) => {
+                input.temperaments.map((temp, index) => {
+                    let aux = allTemperaments.filter(e=> e.id == temp);
                     return <div key={index}>
-                        <p>{temp}</p>
+                        <p>{aux[0].name}</p>
                         <button onClick={() => handleDelete(temp)}>x</button>
                     </div>
                 })

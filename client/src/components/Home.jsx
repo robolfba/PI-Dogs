@@ -98,8 +98,8 @@ export default function Home() {
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)
                     }
                     else if (e.temperaments) { // Si es de la DB
-                        let aux;
-                        for (let i = 0; i < e.temperaments.length; i++) {
+                        let aux = e.temperaments[0].name;
+                        for (let i = 1; i < e.temperaments.length; i++) {
                             aux = aux + ', ' + e.temperaments[i].name;
                         }
                         return (<Card name={e.name} image={e.image} temperament={aux} weight={e.weight} key={e.id} />)

@@ -79,7 +79,7 @@ export function postBreed(payload) {
     return async function (dispatch) {
         try {
             await axios.post("http://localhost:3001/dog", payload);
-            console.log('Actions - postBreed---> payload.temperaments', payload.temperaments);
+            console.log('Actions - postBreed---> payload', payload);
 
             return dispatch({
                 type: POST_BREED,
