@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBreeds, filterBreeds, orderByName, getTemperaments, filterTemperaments } from '../actions';
+import { getBreeds, filterBreeds, orderByName, getTemperaments, filterTemperaments, orderByWeight } from '../actions';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Nav from './Nav';
@@ -35,6 +35,7 @@ export default function Home() {
     }
 
     function handleFilterBreeds(e) {
+        e.preventDefault();
         dispatch(filterBreeds(e.target.value));
     }
 
@@ -45,7 +46,15 @@ export default function Home() {
         setOrden(`Ordenado ${e.target.value}`) // Al modificar el estado local, se vuelve a renderizar
     }
 
+    function handleOrderByWeight(e) {
+        e.preventDefault();
+        dispatch(orderByWeight(e.target.value));
+        setCurrentPage(1); // Modifico la pagina actual
+        setOrden(`Ordenado2 ${e.target.value}`) // Al modificar el estado local, se vuelve a renderizar
+    }
+
     function handleFilterTemperaments(e) {
+        e.preventDefault();
         console.log('filterTemperaments(e.target.value)-->', e.target.value);
         dispatch(filterTemperaments(e.target.value));
     }
@@ -78,18 +87,17 @@ export default function Home() {
                 <div className={style.contenedor_ordenadores} >
                     {/* // Orden alfabetico */}
                     <select className={style.orden_alfabetico} onChange={e => handleOrderByName(e)}>
-                        <option value='asc'>Ascendente</option>
-                        <option value='desc'>Descendente</option>
+                        <option value='asc'>A to Z</option>
+                        <option value='desc'>Z to A</option>
                     </select>
 
                     {/* // Orden por peso */}
-                    <select className={style.orden_peso}>
-                        <option value='MenorMayor'>Menos a mas peso</option>
-                        <option value='MayorMenor'>Mas a menos peso</option>
+                    <select className={style.orden_peso} onChange={e => handleOrderByWeight(e)} >
+                        <option value='menor'>Less weight</option>
+                        <option value='mayor'>Greater weight</option>
                     </select>
                 </div>
             </div>
-
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 

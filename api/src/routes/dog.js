@@ -5,9 +5,9 @@ module.exports = router;
 
 router.post('/', async (req, res) => {
     // Recibo datos del formulario para crear raza a traves del body
-    const { name, height_min, height_max, weight_min, weight_max, yearsOfLife, temperaments } = req.body;
+    const { name, height_min, height_max, weight_min, weight_max,image, yearsOfLife, temperaments } = req.body;
     // Chequeo que los campos obligatorios esten completos, sino retorno un msj de error
-    if (!name || !height_min || !height_max|| !weight_min || !weight_max) {
+    if (!name || !height_min || !height_max|| !weight_min || !weight_max || !image) {
         return res.send('Faltan datos en el back!');
     }
     try {
@@ -17,7 +17,8 @@ router.post('/', async (req, res) => {
             // },
             name,
             height: `${height_min} - ${height_max} cm`,
-            weight: `${weight_min} - ${weight_max} kg`,
+            weight: `${weight_min} - ${weight_max}`,
+            image,
             yearsOfLife
         });
 

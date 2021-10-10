@@ -8,10 +8,27 @@ function validate(input) {
     if (!input.name) {
         errors.name = 'Se requiere un nombre'
     }
-    else if (!input.weight_min) {
+    if (!input.weight_min) {
         errors.weight_min = 'Se requiere un peso min'
     }
-    //COMPLETARR!
+    if (!input.weight_max) {
+        errors.weight_max = 'Se requiere un peso max'
+    }
+    if(input.weight_min >= input.weight_max){
+        errors.weight_max = 'El peso max no puede ser <= que peso min'
+    }
+    if (!input.height_min) {
+        errors.height_min = 'Se requiere una altura min'
+    }
+    if (!input.height_max) {
+        errors.height_max = 'Se requiere una altura max'
+    }
+    if(input.height_min >= input.height_max){
+        errors.height_max = 'La altura max no puede ser <= que altura min'
+    }
+    if(!input.image || input.image.length < 5){
+        errors.image = 'Se requiere un URL de imagen valido'
+    }
     return errors;
 }
 
@@ -26,6 +43,7 @@ export default function BreedCreate() {
         height_max: '',
         weight_min: '',
         weight_max: '',
+        image: '',
         yearsOfLife: '',
         temperaments: []
     });
@@ -64,20 +82,10 @@ export default function BreedCreate() {
             height_max: '',
             weight_min: '',
             weight_max: '',
+            image:'',
             yearsOfLife: '',
             temperaments: []
         })
-
-        // {
-        //     "name": "Postman",
-        //     "height_min": "40",
-        //     "height_max": "78",
-        //     "weight_min": "4",
-        //     "weight_max": "7",
-        //     "yearsOfLife": "13",
-        //     "temperaments": [2,7,1]
-        // }
-
         history.push('/home');
     }
 
@@ -141,6 +149,15 @@ export default function BreedCreate() {
                         type='text'
                         value={input.weight_max}
                         name='weight_max'
+                        onChange={(e) => handleChange(e)}
+                    />
+                </div>
+                <div>
+                    <label>Url image:</label>
+                    <input
+                        type='text'
+                        value={input.image}
+                        name='image'
                         onChange={(e) => handleChange(e)}
                     />
                 </div>

@@ -20,8 +20,8 @@ export default function Detail(props) {
                         <h3>Name: {myBreed.name}</h3>
                         <img src={myBreed.image} />
                         <h3>Temperaments: {myBreed.temperament ? myBreed.temperament :false}</h3>
-                        <h3>Height: {myBreed.height}</h3>
-                        <h3>Weight: {myBreed.weight}</h3>
+                        <h3>Height: {`${myBreed.height} Cm`}</h3>
+                        <h3>Weight: {`${myBreed.weight} Kg`}</h3>
                         <h3>Years span: {myBreed.years}</h3>
                     </div> : <h1>loading...</h1>
 

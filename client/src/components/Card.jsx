@@ -11,7 +11,7 @@ export default function Card({ name, id, image, temperament, weight }) {
                 <h5 className={style.nombre}>{name}</h5>
                 <div className={style.peso}>
                     <h6>Weight:</h6>
-                    {<span>{weight ? weight : false}</span>}
+                    {<span>{weight ? `${weight} Kg` : false}</span>}
                 </div>
                 <div className={style.temperamento}>
                     <h6>Temperaments:</h6>

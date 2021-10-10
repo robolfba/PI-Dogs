@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         try {
             // Busco dentro de miDb, razas que incluyan "name" y las guardo en una constante
             const miDb = await Breed.findAll({
-                attributes: ["name", 'weight', 'id'],
+                attributes: ["name", 'weight', 'id','image'],
                 where: {
                     name: name
                 },
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
     try {
         // Traigo el contenido de miDb 
         const miDb = await Breed.findAll({
-            attributes: ["name", 'weight', 'id'],
+            attributes: ["name", 'weight', 'id','image'],
             include: {
                 model: Temperament,
                 attributes: ['name'],

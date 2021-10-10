@@ -3,12 +3,13 @@
     display:flex;
     /* justify-content:space-between;
     flex-direction: column;  */
-    height: 100vh;
+    height: 96vh;
     width: 100vw;
     background-image:url('./img/fondotexto.png');
-    background-size: 85%;
+    /* background-size: 85%; */
     background-repeat: no-repeat;
-    margin:-50px;
+    background-size:cover;
+    /* margin:-50px; */
 }
 .boton{
     background-color: #E8871E;

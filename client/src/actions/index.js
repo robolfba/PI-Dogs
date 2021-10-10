@@ -8,6 +8,7 @@ export const FILTER_TEMPERAMENTS = 'FILTER_BREEDS';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_BREED = 'POST_BREED';
 export const GET_DETAIL = 'GET_DETAIL';
+export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
 
 export function getBreeds() {
     return async function (dispatch) {
@@ -105,5 +106,11 @@ export function getDetail(id){
         catch(error){
             console.log('Actions - getDetail---> ', error);
         }
+    }
+}
+export function orderByWeight(payload){
+    return{
+        type:ORDER_BY_WEIGHT,
+        payload
     }
 }
