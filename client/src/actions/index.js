@@ -69,6 +69,7 @@ export function getTemperaments() {
 }
 
 export function filterTemperaments(payload) {
+    console.log('Actions - filterTemperaments---> ', payload);
     return {
         type: FILTER_TEMPERAMENTS,
         payload
@@ -95,7 +96,7 @@ export function getDetail(id){
     return async function (dispatch){
         try{
           const json = await axios.get("http://localhost:3001/dogs/"+id);
-
+            console.log('Actions - getDetail---> json.data',json.data);
             return dispatch({
                 type: GET_DETAIL,
                 payload: json.data

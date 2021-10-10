@@ -1,4 +1,4 @@
-import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS, POST_BREED,GET_DETAIL } from '../actions/';
+import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS, POST_BREED, GET_DETAIL } from '../actions/';
 
 const initialState = {
     breeds: [],
@@ -66,23 +66,24 @@ function rootReducer(state = initialState, action) {
                 temperaments: action.payload,
             }
         case FILTER_TEMPERAMENTS:
+            // tener un estado local de filtro_por_temperamento que si el action.payload == 'AllTemperaments'
             //            let aux = allTemperaments.filter(e => {return (e.temperament && e.temperament.includes(action.payload))||(e.temperaments && e.temperaments.some(b => b.name === action.payload))  })
-            const allTemperaments = state.allBreeds;
+            const allBreeds2 = state.allBreeds;
             let filtered = [];
             if (action.payload === 'AllTemperaments') {
-                filtered = [...allTemperaments];
+                filtered = [...allBreeds2];
             }
             else {
-                for (let i = 0; i < allTemperaments.length; i++) {
+                for (let i = 0; i < allBreeds2.length; i++) {
                     //Si es de la API ---> temperament:"Aloof, Clownish,..."
-                    if (allTemperaments[i].temperament && allTemperaments[i].temperament.includes(action.payload)) {
-                        filtered.push(allTemperaments[i]);
+                    if (allBreeds2[i].temperament && allBreeds2[i].temperament.includes(action.payload)) {
+                        filtered = [...filtered, allBreeds2[i]];
                     }
                     // Si es de la DB --> "temperaments":[{name:"Brave"},{name:"algo"},{...}]
-                    else if (allTemperaments[i].temperaments) {
-                        for (let j = 0; j < allTemperaments[i].temperaments.length; j++) {
-                            if (allTemperaments[i].temperaments[j].name === action.payload) {
-                                filtered.push(allTemperaments[i]);
+                    else if (allBreeds2[i].temperaments) {
+                        for (let j = 0; j < allBreeds2[i].temperaments.length; j++) {
+                            if (allBreeds2[i].temperaments[j].name === action.payload) {
+                                filtered = [...filtered, allBreeds2[i]];
                                 break;
                             }
                         }
@@ -96,21 +97,12 @@ function rootReducer(state = initialState, action) {
                 breeds: filtered
             }
         case POST_BREED:
-            // recibo un array de string, donde cada string es un temperamento
-            // entonces, tengo que buscar en temperaments[] cada string y guardar su id 
-            // for(let i = 0; i < action.payload.temperaments.length; i++){
-            //     for(let j = 0; j < state.temperaments.length; j++){
-            //         if(action.payload.temperaments[i] === state.temperaments[j].name){
-            //             action.payload.temperaments[i] = state.temperaments[j].id
-            //         }
-            //     }
-            // }
             return {
                 ...state,
                 breeds: [...state.breeds, action.payload]
             }
         case GET_DETAIL:
-            return{
+            return {
                 ...state,
                 detail: action.payload
             }

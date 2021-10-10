@@ -16,6 +16,7 @@ export default function Home() {
     const [orden, setOrden] = useState('');
     const [currentPage, setCurrentPage] = useState(1); // Pagina actual, comienza en 1
     const [breedsPerPage, setBreedsPerPage] = useState(8); // Cuantas razas tengo por página, en este caso 8
+
     const indexOfLastBreed = currentPage * breedsPerPage; // Indice de la ultima raza
     const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; // Indice de la primer raza
     const currentBreeds = allBreeds.slice(indexOfFirstBreed, indexOfLastBreed); // Razas que voy a tener en la pagina actual
@@ -26,8 +27,7 @@ export default function Home() {
     useEffect(() => {
         dispatch(getBreeds());
         dispatch(getTemperaments());
-    }, [dispatch])              // Lo que se incluye dentro de [] es basicamente de lo que depende este useEffect en 
-    // en el caso de no depender de nada, se lo pasa vacio.
+    }, [dispatch])
 
     function handleClick(e) {
         e.preventDefault();
@@ -46,7 +46,8 @@ export default function Home() {
     }
 
     function handleFilterTemperaments(e) {
-        dispatch(filterTemperaments(e.target.nvalue));
+        console.log('filterTemperaments(e.target.value)-->', e.target.value);
+        dispatch(filterTemperaments(e.target.value));
     }
 
     return (
@@ -95,17 +96,17 @@ export default function Home() {
             <div className={style.contenedor_cards}>
                 {currentBreeds && currentBreeds.map((e) => {
                     if (e.temperament) { // Si es de la API
-                        return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} />)
+                        return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} id={e.id} />)
                     }
                     else if (e.temperaments) { // Si es de la DB
                         let aux = e.temperaments[0].name;
                         for (let i = 1; i < e.temperaments.length; i++) {
                             aux = aux + ', ' + e.temperaments[i].name;
                         }
-                        return (<Card name={e.name} image={e.image} temperament={aux} weight={e.weight} key={e.id} />)
+                        return (<Card name={e.name} image={e.image} temperament={aux} weight={e.weight} key={e.id} id={e.id} />)
                     }
                     else { // Si es de la API (sin temperamento)
-                        return (<Card name={e.name} image={e.image} temperament={'no tengo personalidad'} weight={e.weight} key={e.id} />)
+                        return (<Card name={e.name} image={e.image} temperament={'no tengo personalidad'} weight={e.weight} key={e.id} id={e.id} />)
                     }
                 })}
             </div>

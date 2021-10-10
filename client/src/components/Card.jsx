@@ -3,7 +3,7 @@ import notfound from '../img/notfound.png';
 import style from './styles/Card.module.css';
 import { Link } from 'react-router-dom';
 
-export default function Card({ name, image, temperament, weight }) {
+export default function Card({ name, id, image, temperament, weight }) {
     return (
         <div className={style.contenedor}>
             <img className={style.imagen} src={image ? image : notfound} alt='not found' />
@@ -17,7 +17,7 @@ export default function Card({ name, image, temperament, weight }) {
                     <h6>Temperaments:</h6>
                     {<span>{temperament}</span>}
                 </div>
-                <Link to='/detail'>
+                <Link to={`/detail/${id}`} >
                     <button className={style.boton} >View more</button>
                 </Link>
             </div>

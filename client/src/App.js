@@ -13,7 +13,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Landing} />
           <Route path='/home' component={Home} />
-          <Route path='/detail' component={Ditail}/>
+          <Route path='/detail/:id' component={Ditail}/>
           <Route path='/create' component={BreedCreate}/>
           <Route path='*' component={Error404} />
         </Switch>
