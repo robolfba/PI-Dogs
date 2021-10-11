@@ -39,11 +39,13 @@ function rootReducer(state = initialState, action) {
                         filtered.push(allBreeds2[i]);
                     }
                     // Si es de la DB --> "temperaments":[{name:"Brave"},{name:"algo"},{...}]
-                    else if (allBreeds2[i].temperaments.length > 0) {
-                        for (let j = 0; j < allBreeds2[i].temperaments.length; j++) {
-                            if (allBreeds2[i].temperaments[j].name === action.payload) {
-                                filtered.push(allBreeds2[i]);
-                                break;
+                    if (allBreeds2[i].temperaments) {
+                        if (allBreeds2[i].temperaments.length > 0) {
+                            for (let j = 0; j < allBreeds2[i].temperaments.length; j++) {
+                                if (allBreeds2[i].temperaments[j].name === action.payload) {
+                                    filtered.push(allBreeds2[i]);
+                                    break;
+                                }
                             }
                         }
                     }

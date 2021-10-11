@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Card from './Card';
 import Nav from './Nav';
 import Paged from './Paged';
+import FilterTemps from './FilterTemps';
 import style from './styles/Home.module.css';
 
 export default function Home() {
@@ -53,11 +54,11 @@ export default function Home() {
         setOrden(`Ordenado2 ${e.target.value}`) // Al modificar el estado local, se vuelve a renderizar
     }
 
-    function handleFilterTemperaments(e) {
-        e.preventDefault();
-        console.log('filterTemperaments(e.target.value)-->', e.target.value);
-        dispatch(filterTemperaments(e.target.value));
-    }
+    // function handleFilterTemperaments(e) {
+    //     e.preventDefault();
+    //     console.log('filterTemperaments(e.target.value)-->', e.target.value);
+    //     dispatch(filterTemperaments(e.target.value));
+    // }
 
     return (
         <div className={style.contenedor_general} >
@@ -74,14 +75,15 @@ export default function Home() {
                     </select>
 
                     {/* // Filtro por temperamento */}
-                    <select className={style.filtro_temperamento} onChange={e => handleFilterTemperaments(e)} >
+                    <FilterTemps />
+                    {/* <select className={style.filtro_temperamento} onChange={e => handleFilterTemperaments(e)} >
                         <option value='AllTemperaments'>All temperaments</option>
-                        {
+                           {
                             allTemperaments && allTemperaments.map(e => {
                                 return <option value={e.name} key={e.id}>{e.name}</option>
                             })
                         }
-                    </select>
+                    </select> */}
                 </div>
                 {/* //------------------------------------------------------------- Ordenados */}
                 <div className={style.contenedor_ordenadores} >
