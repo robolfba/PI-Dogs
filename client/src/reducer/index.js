@@ -1,4 +1,4 @@
-import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS, POST_BREED, GET_DETAIL, ORDER_BY_WEIGHT } from '../actions/';
+import { GET_BREEDS, GET_BREED_BY_NAME, FILTER_BREEDS, ORDER_BY_NAME, GET_TEMPERAMENTS, FILTER_TEMPERAMENTS, POST_BREED, GET_DETAIL, ORDER_BY_WEIGHT,RESET_DETAIL } from '../actions/';
 
 const initialState = {
     breeds: [],
@@ -23,10 +23,9 @@ function rootReducer(state = initialState, action) {
                 breeds: action.payload
             }
         case FILTER_TEMPERAMENTS:
-            console.log('REDUCERRRRRRRRRRRRRRRRRRRRRR', action.payload)
+            console.log('Reducer FILTER_TEMPERAMENTS ----> ', action.payload)
             //  let aux = allTemperaments.filter(e => {return (e.temperament && e.temperament.includes(action.payload))||(e.temperaments && e.temperaments.some(b => b.name === action.payload))  })
             const allBreeds2 = state.allBreeds;
-            console.log('REDUCERRRRRRRRRRRRRRRRRRRRRR', allBreeds2)
 
             let filtered = [];
             if (action.payload === 'AllTemperaments') {
@@ -148,6 +147,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 breeds: arraySort
             }
+            case RESET_DETAIL:
+                return {
+                    ...state,
+                    detail: []
+                }
         default:
             return state;
     }

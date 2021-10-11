@@ -16,10 +16,12 @@ export default function Card({ name, id, image, temperament, weight }) {
                 <div className={style.temperamento}>
                     <h6>Temperaments:</h6>
                     {<span>{temperament}</span>}
-                </div>
+                </div >
+                <div className={style.contenedor_boton}>
                 <Link to={`/detail/${id}`} >
                     <button className={style.boton} >View more</button>
                 </Link>
+                </div>
             </div>
 
         </div>

@@ -54,12 +54,6 @@ export default function Home() {
         setOrden(`Ordenado2 ${e.target.value}`) // Al modificar el estado local, se vuelve a renderizar
     }
 
-    // function handleFilterTemperaments(e) {
-    //     e.preventDefault();
-    //     console.log('filterTemperaments(e.target.value)-->', e.target.value);
-    //     dispatch(filterTemperaments(e.target.value));
-    // }
-
     return (
         <div className={style.contenedor_general} >
             <Nav />
@@ -76,14 +70,6 @@ export default function Home() {
 
                     {/* // Filtro por temperamento */}
                     <FilterTemps />
-                    {/* <select className={style.filtro_temperamento} onChange={e => handleFilterTemperaments(e)} >
-                        <option value='AllTemperaments'>All temperaments</option>
-                           {
-                            allTemperaments && allTemperaments.map(e => {
-                                return <option value={e.name} key={e.id}>{e.name}</option>
-                            })
-                        }
-                    </select> */}
                 </div>
                 {/* //------------------------------------------------------------- Ordenados */}
                 <div className={style.contenedor_ordenadores} >
@@ -104,7 +90,7 @@ export default function Home() {
             {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
             <div className={style.contenedor_cards}>
-                {currentBreeds && currentBreeds.map((e) => {
+                {currentBreeds.length ? currentBreeds.map((e) => {
                     if (e.temperament) { // Si es de la API
                         return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} id={e.id} />)
                     }
@@ -118,7 +104,11 @@ export default function Home() {
                     else { // Si es de la API (sin temperamento)
                         return (<Card name={e.name} image={e.image} temperament={'no tengo personalidad'} weight={e.weight} key={e.id} id={e.id} />)
                     }
-                })}
+                })
+                    : <div className={style.loading} >
+                        <h2>No se encontro el nombre buscado!</h2>
+                    </div>
+                }
             </div>
             <div className={style.contenedor_paginado}>
                 <Paged breedsPerPage={breedsPerPage} allBreeds={allBreeds.length} paged={paged} />

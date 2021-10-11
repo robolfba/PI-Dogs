@@ -9,6 +9,7 @@ export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const POST_BREED = 'POST_BREED';
 export const GET_DETAIL = 'GET_DETAIL';
 export const ORDER_BY_WEIGHT = 'ORDER_BY_WEIGHT';
+export const RESET_DETAIL = 'RESET_DETAIL';
 
 export function getBreeds() {
     return async function (dispatch) {
@@ -93,24 +94,31 @@ export function postBreed(payload) {
         }
     }
 }
-export function getDetail(id){
-    return async function (dispatch){
-        try{
-          const json = await axios.get("http://localhost:3001/dogs/"+id);
-            console.log('Actions - getDetail---> json.data',json.data);
+export function getDetail(id) {
+    return async function (dispatch) {
+        try {
+            const json = await axios.get("http://localhost:3001/dogs/" + id);
+            console.log('Actions - getDetail---> json.data', json.data);
             return dispatch({
                 type: GET_DETAIL,
                 payload: json.data
             })
         }
-        catch(error){
+        catch (error) {
             console.log('Actions - getDetail---> ', error);
         }
     }
 }
-export function orderByWeight(payload){
-    return{
-        type:ORDER_BY_WEIGHT,
+export function orderByWeight(payload) {
+    return {
+        type: ORDER_BY_WEIGHT,
         payload
+    }
+}
+export function resetDetail() {
+    console.log('Actions - resetDetail---> sin payload');
+    return {
+        type: RESET_DETAIL,
+        // payload
     }
 }

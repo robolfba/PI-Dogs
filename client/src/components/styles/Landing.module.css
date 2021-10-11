@@ -3,16 +3,21 @@
     display:flex;
     /* justify-content:space-between;
     flex-direction: column;  */
-    height: 96vh;
+    /* height: 96.8vh;
+    width: 100vw; */
+    height: 100vh;
     width: 100vw;
-    background-image:url('./img/fondotexto.png');
-    /* background-size: 85%; */
+    margin:none;
+    /* height: 100%;
+    width: 100%; */
+    background-image:url('./img/asd.png');
+    background-size: 100%;
     background-repeat: no-repeat;
-    background-size:cover;
+    /* background-size:cover; */
     /* margin:-50px; */
 }
 .boton{
-    background-color: #E8871E;
+    background-color: #EDB458; 
     border: none;
     border-radius: 10px;
     color: #EBF5DF;
@@ -21,18 +26,22 @@
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin-bottom: 220px;
-    margin-left: 340px;
+    font-family: 'Dosis', sans-serif;
+    width: 250px;
+    margin-bottom: 250px;
+    margin-left: 325px;
+    /* margin:0; */
+    /* opacity: 90%; */
 }
 .boton:hover {
-    background-color: #EDB458;
+    background-color: #E8871E;
     transition: 0.5s;
+    transition-duration: 0.5s;
     cursor: pointer;
+    opacity: 60%;
     /* padding-right: 25px; */
-   
-
   }
+
 .columna{
     display:flex;
     justify-content: flex-end;

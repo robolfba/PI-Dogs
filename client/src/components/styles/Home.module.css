@@ -1,4 +1,7 @@
 .contenedor_general{
+    width: 80vw;
+    margin-right: -10px;
+    
 }
 .contenedor_cards{
     display: flex;
@@ -39,7 +42,8 @@ justify-content: flex-start;
     justify-content: flex-end;
 }
 .boton_razas{
-    background-color: #E8871E;
+    background-color: #EDB458;
+    font-size: 12px;
     color:white;
     width: 80px;
     height: 35px;
@@ -51,11 +55,12 @@ justify-content: flex-start;
 .boton_razas:hover{
     cursor:pointer;
     transition: 00.5s;
-    background-color:#EDB458;
+    background-color:#E8871E;
 }
 
 .filtro_razas{
-    background-color: #E8871E;
+    background-color: #EDB458;
+    font-size: 12px;
     color:white;
     width: 80px;
     height: 35px;
@@ -68,10 +73,11 @@ justify-content: flex-start;
 .filtro_razas:hover{
     cursor:pointer;
     transition: 00.5s;
-    background-color:#EDB458;
+    background-color:#E8871E;
 }
 .filtro_temperamento{
-    background-color: #E8871E;
+    background-color: #EDB458;
+    font-size: 12px;
     color:white;
     width: 80px;
     height: 35px;
@@ -84,11 +90,12 @@ justify-content: flex-start;
 .filtro_temperamento:hover{
     cursor:pointer;
     transition: 00.5s;
-    background-color:#EDB458;
+    background-color:#E8871E;
 }
 
 .orden_alfabetico{
-    background-color: #E8871E;
+    background-color: #EDB458;
+    font-size: 12px;
     color:white;
     width: 80px;
     height: 35px;
@@ -101,11 +108,12 @@ justify-content: flex-start;
 .orden_alfabetico:hover{
     cursor:pointer;
     transition: 00.5s;
-    background-color:#EDB458;
+    background-color:#E8871E;
 }
 
 .orden_peso{
-    background-color: #E8871E;
+    background-color: #EDB458;
+    font-size: 12px;
     color:white;
     width: 80px;
     height: 35px;
@@ -118,5 +126,11 @@ justify-content: flex-start;
 .orden_peso:hover{
     cursor:pointer;
     transition: 00.5s;
-    background-color:#EDB458;
+    background-color:#E8871E;
+}
+.loading{
+    width: 1000px;
+    height: 1000px;
+    background: fixed;
+    background-color: white;
 }

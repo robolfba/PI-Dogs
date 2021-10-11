@@ -11,7 +11,6 @@ export default function Landing() {
                     <button className={style.boton}>View more</button>
                 </Link>
             </div>
-
         </div>
     )
 }

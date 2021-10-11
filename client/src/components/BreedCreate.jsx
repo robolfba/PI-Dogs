@@ -2,27 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTemperaments, postBreed } from '../actions';
+import Nav from './Nav';
+import style from './styles/BreedCreate.module.css'
 
 function validate(input) {
     let errors = {};
-    
+    // NAME -----------------------------------------------------------------------------------------------------------------------
     if (!input.name) {
         errors.name = 'Se requiere un nombre';
     }
-    if (!input.height_min){
-        errors.height_min = 'Se requiere una altura minima';
+    // HEIGHT (10 - 150 cm) -------------------------------------------------------------------------------------------------------
+    if (!input.height_min) {
+        // errors.height_min = 'Se requiere una altura minima';
+        errors.height_min = 'Se espera un valor numerico entre 10 y 150';
     }
-    if (input.height_min && !/\d/.test(input.height_min)) {
-        errors.height_min = 'Se espera un valor numerico';
+    if (input.height_min && (!/\d/.test(input.height_min) || parseInt(input.height_min) < 10 || parseInt(input.height_min) > 150)) {
+        errors.height_min = 'Se espera un valor numerico entre 10 y 150';
     }
-    if (!input.height_max){
-        errors.height_max = 'Se requiere una altura maxima';
+    if (!input.height_max) {
+        // errors.height_max = 'Se requiere una altura maxima';
+        errors.height_max = 'Se espera un valor numerico entre 10 y 150';
     }
-    if (input.height_max && !/\d/.test(input.height_max)) {
-        errors.height_max = 'Se espera un valor numerico';
+    if (input.height_max && (!/\d/.test(input.height_max) || parseInt(input.height_max) < 10 || parseInt(input.height_max) > 150)) {
+        errors.height_max = 'Se espera un valor numerico entre 10 y 150';
     }
     if (parseInt(input.height_max) <= parseInt(input.height_min)) {
         errors.height_max = 'Se espera que el valor maximo sea mayor al minimo';
+    }
+    // WEIGHT (2 - 100 kg) -------------------------------------------------------------------------------------------------------
+    if (!input.weight_min) {
+        errors.weight_min = 'Se requiere un peso minimo';
+    }
+    if (input.weight_min && (!/\d/.test(input.weight_min) || parseInt(input.weight_min) < 2 || parseInt(input.weight_min) > 100)) {
+        errors.weight_min = 'Se espera un valor numerico entre 2 y 100';
+    }
+    if (!input.weight_max) {
+        errors.weight_max = 'Se requiere un peso maximo';
+    }
+    if (input.weight_max && (!/\d/.test(input.weight_max) || parseInt(input.weight_max) < 2 || parseInt(input.weight_max) > 100)) {
+        errors.weight_max = 'Se espera un valor numerico entre 2 y 100';
+    }
+    if (parseInt(input.weight_max) <= parseInt(input.weight_min)) {
+        errors.weight_max = 'Se espera que el valor maximo sea mayor al minimo';
+    }
+    // TEMPERAMENTS (se requiere al menos uno)
+    if (input.temperaments.length === 0) {
+        errors.temperaments = 'Se requiere elegir al menos un temperamento';
+    }
+    else {
+        errors.temperaments = '';
     }
     return errors;
 }
@@ -58,18 +86,20 @@ export default function BreedCreate() {
         setInput({
             ...input,
             temperaments: [...input.temperaments, e.target.value]
-        })
+        });
+        setErrors(validate({
+            ...input,
+            temperaments: [...input.temperaments, e.target.value]
+        }))
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        setErrors(validate({
-            ...input,
-            [e.target.name]: e.target.value
-        }))
+        // setErrors(validate({
+        //     ...input,
+        //     [e.target.name]: e.target.value
+        // }))
         dispatch(postBreed(input));
-        console.log('input.temperaments (handleSubmit)--->', input.temperaments);
-
         alert('Raza creada con exito!');
         setInput({
             name: '',
@@ -97,10 +127,10 @@ export default function BreedCreate() {
 
     return (
         <div>
-            <Link to='/home'>
+            {/* <Link to='/home'>
                 <span>HOME</span>
-            </Link>
-
+            </Link> */}
+            <Nav />
             <h3>BREED CREATE</h3>
 
             <form onSubmit={(e) => handleSubmit(e)}>
@@ -145,8 +175,8 @@ export default function BreedCreate() {
                         onChange={(e) => handleChange(e)}
                     />
                     {errors.height_max && (
-                            <p>{errors.height_max}</p>
-                        )}
+                        <p>{errors.height_max}</p>
+                    )}
                 </div>
                 <div>
                     <label>Weight min:</label>
@@ -157,6 +187,9 @@ export default function BreedCreate() {
                         required
                         onChange={(e) => handleChange(e)}
                     />
+                    {errors.weight_min && (
+                        <p>{errors.weight_min}</p>
+                    )}
                 </div>
                 <div>
                     <label>Weight max:</label>
@@ -167,6 +200,9 @@ export default function BreedCreate() {
                         required
                         onChange={(e) => handleChange(e)}
                     />
+                    {errors.weight_max && (
+                        <p>{errors.weight_max}</p>
+                    )}
                 </div>
                 <div>
                     <label>Url image:</label>
@@ -188,13 +224,16 @@ export default function BreedCreate() {
                 </div>
                 <div>
                     <label>Temperaments:</label>
-                    <select required onChange={e => handleSelect(e)}>
+                    <select onChange={e => handleSelect(e)}>
                         {
                             allTemperaments.map(e => {
                                 return <option key={e.id} value={e.id}>{e.name}</option>
                             })
                         }
                     </select>
+                    {errors.temperaments && (
+                        <p>{errors.temperaments}</p>
+                    )}
                 </div>
                 <button type='submit'>Breed create!</button>
             </form>

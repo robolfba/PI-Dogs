@@ -7,7 +7,7 @@ import logo from './styles/img/breedsgallery.png'
 export default function Nav() {
     return (
         <div className={style.contenedor} >
-            <img src={logo} alt='algo' className={style.logo} />
+            <h1 className={style.logo} >Breeds APP</h1>
             <SearchBar />
             <div className={style.home_create}>
                 <div className={style.home} >
