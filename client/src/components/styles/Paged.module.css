@@ -1,6 +1,7 @@
 .contenedor{
     list-style: none;
     margin-right: 32px;
+    /* margin-bottom: 500px; */
     display:flex;
     justify-content: space-around;
     align-content: center;
