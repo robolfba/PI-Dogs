@@ -1,0 +1,57 @@
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 550px;
+    height: 800px;
+}
+.name{
+    display: flex;
+    flex-direction: row;
+}
+.height_min{
+    display: flex;
+    flex-direction: row;
+}
+.height_max{
+    display: flex;
+}
+.weight_min{
+    display: flex;
+}
+.weight_max{
+    display: flex;
+}
+.image{
+    display: flex;
+}
+.yearsOfLife{
+    display: flex;
+}
+.boton{
+    width:100px;
+    display: flex;
+}
+input{
+    border: none;
+    border-radius: 17px;
+    width: auto;
+    height: 20px;
+    margin-left: 15px;
+    background-color: #BAD4AA;
+}
+select{
+    border: none;
+    border-radius: 17px;
+    width: auto;
+    height: 20px;
+    margin-left: 15px;
+    background-color: #BAD4AA;
+}
+p{
+    margin-top: 22px;
+    margin-left: -150px;
+}
+
+
+

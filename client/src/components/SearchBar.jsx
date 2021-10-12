@@ -14,7 +14,6 @@ export default function SearchBar() {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        //name.replace(/^\w/, (c) => c.toUpperCase()
         dispatch(getBreedByName(name));
         setName('');
     }

@@ -116,6 +116,7 @@ router.get('/:id', async (req, res) => {
                     height: breedApi.height.metric,
                     weight: breedApi.weight.metric,
                     years: breedApi.life_span,
+                    origin: breedApi.origin,
                 }
                 return res.json(obj);
             }

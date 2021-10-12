@@ -14,6 +14,7 @@
     height: 22px;
     width: 350px;
     font-family: 'Dosis', sans-serif;
+    background-color: white;
 }
 .boton{
     display:flex;
