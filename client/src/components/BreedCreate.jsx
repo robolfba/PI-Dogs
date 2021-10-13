@@ -8,13 +8,31 @@ import style from './styles/BreedCreate.module.css'
 function validate(input) {
     let errors = {};
     let urlValidate = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0–9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0–9@:%_\+.~#()?&//=]*)/);
+    // switch (input) {
+    //     case input.name:
+    //         errors.name = input.name.length < 1 ? 'A name is required' : '';
+    //         break;
+    //     case input.image:
+    //         errors.image = input.image && !urlValidate.test(input.image)? 'You have to enter a valid URL':'';
+    //         break;
+    //     case input.temperaments:
+    //         errors.temperaments = input.temperaments.length === 0? 'Choosing at least one temperament is required':'';
+    //     default:
+    //         break;
+    // }
     // NAME -----------------------------------------------------------------------------------------------------------------------
     if (!input.name) {
         errors.name = 'A name is required';
     }
+    else if (input.name) {
+        errors.name = '';
+    }
     // IMAGE -----------------------------------------------------------------------------------------------------------------------
     else if (input.image && !urlValidate.test(input.image)) {
         errors.image = 'You have to enter a valid URL'
+    }
+    else if (input.image && urlValidate.test(input.image)) {
+        errors.image = ''
     }
     // HEIGHT (10 - 150 cm) -------------------------------------------------------------------------------------------------------
     else if (!input.height_min) {
@@ -34,6 +52,10 @@ function validate(input) {
     else if (parseInt(input.height_max) <= parseInt(input.height_min)) {
         errors.height_max = 'The maximum height is expected to be greater than the minimum';
     }
+    else if (input.height_min && input.height_max && (parseInt(input.height_max) > parseInt(input.height_min))) {
+        errors.height_min = '';
+        errors.height_max = '';
+    }
     // WEIGHT (2 - 100 kg) -------------------------------------------------------------------------------------------------------
     else if (!input.weight_min) {
         errors.weight_min = 'A numerical value between 2 and 100 is expected';
@@ -50,6 +72,10 @@ function validate(input) {
     else if (parseInt(input.weight_max) <= parseInt(input.weight_min)) {
         errors.weight_max = 'Maximum weight is expected to be greater than minimum';
     }
+    else if (input.weight_min && input.weight_max && (parseInt(input.weight_max) > parseInt(input.weight_min))) {
+        errors.weight_min = '';
+        errors.weight_max = '';
+    }
     // TEMPERAMENTS (se requiere al menos uno)
     else if (input.temperaments.length === 0) {
         errors.temperaments = 'Choosing at least one temperament is required';
@@ -65,6 +91,7 @@ export default function BreedCreate() {
     const history = useHistory();
     const allTemperaments = useSelector((state) => state.temperaments);
     const [errors, setErrors] = useState({});
+    // const [disabled, setDisabled] = useState(true);
     const [input, setInput] = useState({
         name: '',
         height_min: '',
@@ -130,135 +157,150 @@ export default function BreedCreate() {
         dispatch(getTemperaments());
     }, [dispatch]);
 
+    // function validarForm(errors) {
+    //     let valid = true;
+    //     Object.values(errors).forEach((val) => val.length > 0 && (valid = false)
+    //     );
+    //     if (valid) {
+    //         setDisabled(false)
+    //     } else {
+    //         setDisabled(true)
+    //     }
+    // }
+
+    // validarForm(errors);
+
     return (
         <div>
-            {/* <Link to='/home'>
-                <span>HOME</span>
-            </Link> */}
             <Nav />
-            <h3>Invent your own breed</h3>
+            <h2>Invent your own breed</h2>
 
             <form onSubmit={(e) => handleSubmit(e)}>
+                <div className={style.contenedor_mas_grande} >
 
-                <div className={style.contenedor} >
-                    <div className={style.name}>
-                        <label >Name:</label>
-                        <input
-                            type='text'
-                            value={input.name}
-                            name='name'
-                            // placeholder='breed name'
-                            required
-                            onChange={(e) => handleChange(e)}
-                        // className={style.input}
-                        />
-                        {errors.name && (
-                            <p>{errors.name}</p>
+                    <div className={style.contenedor} >
+                        <div className={style.name}>
+                            <label >Name: </label>
+                            <input
+                                type='text'
+                                value={input.name}
+                                name='name'
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
+                            {errors.name && (
+                                <span className={style.span_errors} >{errors.name}</span>
+                            )}
+                        </div>
+
+                        <div className={style.height_min}>
+                            <label>Height min (cm.): </label>
+                            <input
+                                type='text'
+                                value={input.height_min}
+                                name='height_min'
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
+                            {errors.height_min && (
+                                <span className={style.span_errors}>{errors.height_min}</span>
+                            )}
+                        </div>
+                        <div className={style.height_max}>
+                            <label>Height max (cm.): </label>
+                            <input
+                                type='text'
+                                value={input.height_max}
+                                name='height_max'
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
+                            {errors.height_max && (
+                                <span className={style.span_errors}>{errors.height_max}</span>
+                            )}
+                        </div>
+                        <div className={style.weight_min}>
+                            <label>Weight min (kg.): </label>
+                            <input
+                                type='text'
+                                value={input.weight_min}
+                                name='weight_min'
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
+                            {errors.weight_min && (
+                                <span className={style.span_errors}>{errors.weight_min}</span>
+                            )}
+                        </div>
+                        <div className={style.weight_max}>
+                            <label>Weight max (kg.): </label>
+                            <input
+                                type='text'
+                                value={input.weight_max}
+                                name='weight_max'
+                                required
+                                onChange={(e) => handleChange(e)}
+                            />
+                            {errors.weight_max && (
+                                <span className={style.span_errors}>{errors.weight_max}</span>
+                            )}
+                        </div>
+                        <div className={style.image}>
+                            <label>Url image: </label>
+                            <input
+                                type='text'
+                                value={input.image}
+                                name='image'
+                                onChange={(e) => handleChange(e)}
+                            />
+                        </div>
+                        {errors.image && (
+                            <span className={style.span_errors}>{errors.image}</span>
                         )}
+
+                        <div className={style.yearsOfLife}>
+                            <label>Years of life: </label>
+                            <input
+                                type='text'
+                                value={input.yearsOfLife}
+                                name='yearsOfLife'
+                                onChange={(e) => handleChange(e)}
+                            />
+                        </div>
+                        <input disabled={false} value='Create Breeds' className={style.boton} type='submit' />
                     </div>
 
-                    <div className={style.height_min}>
-                        <label>Height min:</label>
-                        <input
-                            type='text'
-                            value={input.height_min}
-                            name='height_min'
-                            // placeholder='number between 15 and 100'
-                            required
-                            onChange={(e) => handleChange(e)}
-                        // className={style.input}
-                        />
-                        {errors.height_min && (
-                            <p>{errors.height_min}</p>
-                        )}
+                    {/* //-------------------------------------------------------------------------------------------------------------------- */}
+                    <div className={style.contenedor_temperamentos}>
+                        <div className={style.select_temperamentos} >
+                            <label>Temperaments: </label>
+                            <select onChange={e => handleSelect(e)}>
+                                {
+                                    allTemperaments.map(e => {
+                                        return <option className={style.texto_temperamento} key={e.id} value={e.id}>{e.name}</option>
+                                    })
+                                }
+                            </select>
+                            {errors.temperaments && (
+                                <span className={style.span_errors}>{errors.temperaments}</span>
+                            )}
+                        </div>
+                        {/* Aca se muestran los temperamentos que se van agregando! */}
+                        {
+                            input.temperaments.map((temp, index) => {
+                                let aux = allTemperaments.filter(e => e.id == temp);
+                                return <div className={style.contenedor_final}>
+                                    <div className={style.contenedor_temperamento_seleccionado} key={index}>
+                                        <h4 className={style.temperamento_seleccionado} >{aux[0].name}</h4>
+                                        <button className={style.boton_temperamento_seleccionado} onClick={() => handleDelete(temp)}>x</button>
+                                    </div>
+                                </div>
+                            })
+                        }
                     </div>
-                    <div className={style.height_max}>
-                        <label>Height max:</label>
-                        <input
-                            type='text'
-                            value={input.height_max}
-                            name='height_max'
-                            // placeholder='number between 15 and 100'
-                            required
-                            onChange={(e) => handleChange(e)}
-                        // className={style.input}
-                        />
-                        {errors.height_max && (
-                            <p>{errors.height_max}</p>
-                        )}
-                    </div>
-                    <div className={style.weight_min}>
-                        <label>Weight min:</label>
-                        <input
-                            type='text'
-                            value={input.weight_min}
-                            name='weight_min'
-                            required
-                            onChange={(e) => handleChange(e)}
-                        // className={style.input}
-                        />
-                        {errors.weight_min && (
-                            <p>{errors.weight_min}</p>
-                        )}
-                    </div>
-                    <div className={style.weight_max}>
-                        <label>Weight max:</label>
-                        <input
-                            type='text'
-                            value={input.weight_max}
-                            name='weight_max'
-                            required
-                            onChange={(e) => handleChange(e)}
-                        // className={style.input}
-                        />
-                        {errors.weight_max && (
-                            <p>{errors.weight_max}</p>
-                        )}
-                    </div>
-                    <div className={style.image}>
-                        <label>Url image:</label>
-                        <input
-                            type='text'
-                            value={input.image}
-                            name='image'
-                            onChange={(e) => handleChange(e)}
-                        />
-                    </div>
-                    <div className={style.yearsOfLife}>
-                        <label>Years of life:</label>
-                        <input
-                            type='text'
-                            value={input.yearsOfLife}
-                            name='yearsOfLife'
-                            onChange={(e) => handleChange(e)}
-                        />
-                    </div>
-                    <div>
-                        <label>Temperaments:</label>
-                        <select onChange={e => handleSelect(e)}>
-                            {
-                                allTemperaments.map(e => {
-                                    return <option key={e.id} value={e.id}>{e.name}</option>
-                                })
-                            }
-                        </select>
-                        {errors.temperaments && (
-                            <p>{errors.temperaments}</p>
-                        )}
-                    </div>
-                    <button className={style.boton} type='submit'>Breed create!</button>
                 </div>
             </form>
-            {/* Aca se muestran los temperamentos que se van agregando! */}
-            {
-                input.temperaments.map((temp, index) => {
-                    let aux = allTemperaments.filter(e => e.id == temp);
-                    return <div key={index}>
-                        <p>{aux[0].name}</p>
-                        <button onClick={() => handleDelete(temp)}>x</button>
-                    </div>
-                })
-            }
+
         </div>
     )
 

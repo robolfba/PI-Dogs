@@ -17,8 +17,9 @@ export default function Detail(props) {
     return (
         <div>
             <Nav />
-            {
-                myBreed ?
+
+            {console.log('---------->',myBreed)}
+
                     <div className={style.contenedor} >
                         <img className={style.imagen} src={myBreed.image} alt='una imagen' />
                         <div className={style.contenedor_texto}>
@@ -34,9 +35,9 @@ export default function Detail(props) {
                                 <h3>Features: {myBreed.temperament? myBreed.temperament : false}</h3>
                             </div>
                         </div>
+                    </div> 
 
-                    </div> : <h1>loading...</h1>
-            }
+
         </div>
     )
 }
