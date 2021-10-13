@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBreeds, filterBreeds, orderByName, getTemperaments, filterTemperaments, orderByWeight } from '../actions';
-import { Link } from 'react-router-dom';
+import { getBreeds, filterBreeds, orderByName, getTemperaments, orderByWeight } from '../actions';
 import Card from './Card';
 import Nav from './Nav';
 import Paged from './Paged';
@@ -13,7 +12,7 @@ export default function Home() {
 
     const dispatch = useDispatch(); // Esto es lo mismo que hacer mapDispatchToProps()
     const allBreeds = useSelector((state) => state.breeds); // Esto es lo mismo que hacer el mapStateToProps()
-    const allTemperaments = useSelector((state) => state.temperaments); // Esto es lo mismo que hacer el mapStateToProps()
+    // const allTemperaments = useSelector((state) => state.temperaments); // Esto es lo mismo que hacer el mapStateToProps()
 
     const [loading, setLoading] = useState(true);
     const [orden, setOrden] = useState('');
@@ -102,19 +101,40 @@ export default function Home() {
                 {/* //////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
                 <div className={style.contenedor_cards}>
-                    {Array.isArray(currentBreeds)? currentBreeds.map((e) => {
+                    {Array.isArray(currentBreeds) ? currentBreeds.map((e) => {
                         if (e.temperament) { // Si es de la API
-                            return (<Card name={e.name} image={e.image} temperament={e.temperament} weight={e.weight} key={e.id} id={e.id} />)
+                            return (<Card
+                                name={e.name}
+                                image={e.image}
+                                temperament={e.temperament}
+                                weight={e.weight}
+                                key={e.id}
+                                id={e.id}
+                            />)
                         }
-                        else if (e.temperaments) { // Si es de la DB
+                        else if (e.temperaments.length) { // Si es de la DB
                             let aux = e.temperaments[0].name;
                             for (let i = 1; i < e.temperaments.length; i++) {
                                 aux = aux + ', ' + e.temperaments[i].name;
                             }
-                            return (<Card name={e.name} image={e.image} temperament={aux} weight={e.weight} key={e.id} id={e.id} />)
+                            return (<Card
+                                name={e.name}
+                                image={e.image}
+                                temperament={aux}
+                                weight={e.weight}
+                                key={e.id}
+                                id={e.id}
+                            />)
                         }
                         else { // Si es de la API (sin temperamento)
-                            return (<Card name={e.name} image={e.image} temperament={'no tengo personalidad'} weight={e.weight} key={e.id} id={e.id} />)
+                            return (<Card
+                                name={e.name}
+                                image={e.image}
+                                temperament={'no tengo personalidad'}
+                                weight={e.weight}
+                                key={e.id}
+                                id={e.id}
+                            />)
                         }
                     })
                         : <div className={style.loading} >

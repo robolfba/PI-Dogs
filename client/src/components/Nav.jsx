@@ -7,7 +7,7 @@ import logo from './styles/img/breedsgallery.png'
 export default function Nav() {
     return (
         <div className={style.contenedor} >
-            <h1 className={style.logo} >Breeds APP</h1>
+            <Link to='/home' className={style.logo1}> <h1 className={style.logo} >Breeds APP</h1></Link>
             <SearchBar />
             <div className={style.home_create}>
                 <div className={style.home} >
