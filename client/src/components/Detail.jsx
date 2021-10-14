@@ -31,7 +31,7 @@ export default function Detail(props) {
                         <h3>Origin: {myBreed.origin ? myBreed.origin : ' - '}</h3>
                         <h3>Average height: {`${myBreed.height} Cm`}</h3>
                         <h3>Average weight: {`${myBreed.weight} Kg`}</h3>
-                        <h3>Life expectancy: {myBreed.yearsOfLife ? myBreed.yearsOfLife + ' years' : myBreed.years ? myBreed.years : false}</h3>
+                        <h3>Life expectancy: {myBreed.yearsOfLife ? myBreed.yearsOfLife + ' years' : myBreed.years ? myBreed.years : ' - '}</h3>
                         <h3>Features: {myBreed.temperament ? myBreed.temperament : myBreed.temperaments ? myBreed.temperaments.map(e => e.name).join(', ') : false}</h3>
                     </div>
                 </div>

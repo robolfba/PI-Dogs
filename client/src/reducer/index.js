@@ -10,14 +10,14 @@ const initialState = {
 function rootReducer(state = initialState, action) {
     switch (action.type) {
         case GET_BREEDS:
-            console.log('Reducer GET_BREEDS ----> ', action.payload);
+            // console.log('Reducer GET_BREEDS ----> ', action.payload);
             return {
                 ...state,
                 breeds: action.payload,
                 allBreeds: action.payload
             }
         case GET_BREED_BY_NAME:
-            console.log('Reducer GET_BREED_BY_NAME ----> ', action.payload);
+            // console.log('Reducer GET_BREED_BY_NAME ----> ', action.payload);
             if (!action.payload.length) {
                 return {
                     ...state,
@@ -32,7 +32,7 @@ function rootReducer(state = initialState, action) {
             }
 
         case FILTER_TEMPERAMENTS:
-            console.log('Reducer FILTER_TEMPERAMENTS ----> ', action.payload)
+            // console.log('Reducer FILTER_TEMPERAMENTS ----> ', action.payload)
             //  let aux = allTemperaments.filter(e => {return (e.temperament && e.temperament.includes(action.payload))||(e.temperaments && e.temperaments.some(b => b.name === action.payload))  })
             const allBreeds2 = state.allBreeds;
 
@@ -59,14 +59,14 @@ function rootReducer(state = initialState, action) {
                     }
                 }
             }
-            console.log('esto es el filtered--->', filtered);
+            // console.log('esto es el filtered--->', filtered);
             // ACA ESTARIA DEVOLVIENDO UN ARREGLO DE RAZAS QUE MATCHEARON CON EL TEMPERAMENTO QUE VIENE EN ACTION.PAYLOAD
             return {
                 ...state,
                 breeds: filtered
             }
         case FILTER_BREEDS:
-            console.log('Reducer FILTER_BREEDS ----> ', action.payload);
+            // console.log('Reducer FILTER_BREEDS ----> ', action.payload);
             const allBreeds = state.allBreeds;
             let filterSelect;
             if (action.payload === 'AllBreeds') {
@@ -83,7 +83,7 @@ function rootReducer(state = initialState, action) {
                 breeds: filterSelect
             }
         case ORDER_BY_NAME:
-            console.log('Reducer ORDER_BY_NAME ----> ', action.payload);
+            // console.log('Reducer ORDER_BY_NAME ----> ', action.payload);
             const sortedArr = action.payload === 'asc' ?
                 state.breeds.sort(function (a, b) {
                     if (a.name > b.name) {
@@ -108,26 +108,26 @@ function rootReducer(state = initialState, action) {
                 breeds: sortedArr,
             }
         case GET_TEMPERAMENTS:
-            console.log('Reducer GET_TEMPERAMENTS ----> ', action.payload);
+            // console.log('Reducer GET_TEMPERAMENTS ----> ', action.payload);
             return {
                 ...state,
                 temperaments: action.payload,
             }
 
         case POST_BREED:
-            console.log('Reducer POST_BREED ----> ', action.payload);
+            // console.log('Reducer POST_BREED ----> ', action.payload);
             return {
                 ...state,
                 breeds: [...state.breeds, action.payload]
             }
         case GET_DETAIL:
-            console.log('Reducer GET_DETAIL----> ', action.payload);
+            // console.log('Reducer GET_DETAIL----> ', action.payload);
             return {
                 ...state,
                 detail: action.payload
             }
         case ORDER_BY_WEIGHT:
-            console.log('Reducer ORDER_BY_WEIGHT----> ', action.payload);
+            // console.log('Reducer ORDER_BY_WEIGHT----> ', action.payload);
             function promedio(string) {
                 let [a, b] = string.split(' - ');
                 return ((parseInt(a) + parseInt(b)) / 2);

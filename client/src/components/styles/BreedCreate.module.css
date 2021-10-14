@@ -94,11 +94,9 @@ select{
     background-color: #BAD4AA;
 }
 .span_errors{
-    /* margin-top: 22px; */
-    /* margin-left: -150px; */
     margin-top: 3px;
     margin-left: 10px;
-    font-size: 12px;
+    font-size: 13px;
     /* width: 200px; */
     color:#E8871E;
 }

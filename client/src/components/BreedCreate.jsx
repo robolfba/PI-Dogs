@@ -4,85 +4,59 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTemperaments, postBreed } from '../actions';
 import Nav from './Nav';
 import style from './styles/BreedCreate.module.css'
+const urlValidate = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0–9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0–9@:%_\+.~#()?&//=]*)/);
 
 function validate(input) {
     let errors = {};
-    let urlValidate = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0–9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0–9@:%_\+.~#()?&//=]*)/);
-    // switch (input) {
-    //     case input.name:
-    //         errors.name = input.name.length < 1 ? 'A name is required' : '';
-    //         break;
-    //     case input.image:
-    //         errors.image = input.image && !urlValidate.test(input.image)? 'You have to enter a valid URL':'';
-    //         break;
-    //     case input.temperaments:
-    //         errors.temperaments = input.temperaments.length === 0? 'Choosing at least one temperament is required':'';
-    //     default:
-    //         break;
-    // }
     // NAME -----------------------------------------------------------------------------------------------------------------------
     if (!input.name) {
         errors.name = 'A name is required';
     }
-    else if (input.name) {
-        errors.name = '';
-    }
+    // if (input.name) {
+    //     errors.name = '';
+    // }
     // IMAGE -----------------------------------------------------------------------------------------------------------------------
-    else if (input.image && !urlValidate.test(input.image)) {
+    if (input.image && !urlValidate.test(input.image)) {
         errors.image = 'You have to enter a valid URL'
     }
-    else if (input.image && urlValidate.test(input.image)) {
-        errors.image = ''
-    }
+    // if (input.image && urlValidate.test(input.image)) {
+    //     errors.image = ''
+    // }
     // HEIGHT (10 - 150 cm) -------------------------------------------------------------------------------------------------------
-    else if (!input.height_min) {
-        // errors.height_min = 'Se requiere una altura minima';
+    if (!input.height_min || (input.height_min && parseInt(input.height_min) < 10 || parseInt(input.height_min) > 150)) {
         errors.height_min = 'A numerical value between 10 and 150 is expected';
     }
-    else if (input.height_min && (!/\d/.test(input.height_min) || parseInt(input.height_min) < 10 || parseInt(input.height_min) > 150)) {
-        errors.height_min = 'A numerical value between 10 and 150 is expected';
-    }
-    else if (!input.height_max) {
-        // errors.height_max = 'Se requiere una altura maxima';
+    if (!input.height_max || input.height_max && parseInt(input.height_max) < 10 || parseInt(input.height_max) > 150) {
         errors.height_max = 'A numerical value between 10 and 150 is expected';
     }
-    else if (input.height_max && (!/\d/.test(input.height_max) || parseInt(input.height_max) < 10 || parseInt(input.height_max) > 150)) {
-        errors.height_max = 'A numerical value between 10 and 150 is expected';
-    }
-    else if (parseInt(input.height_max) <= parseInt(input.height_min)) {
+    if (input.height_min && input.height_max && parseInt(input.height_max) < parseInt(input.height_min)) {
         errors.height_max = 'The maximum height is expected to be greater than the minimum';
     }
-    else if (input.height_min && input.height_max && (parseInt(input.height_max) > parseInt(input.height_min))) {
-        errors.height_min = '';
-        errors.height_max = '';
-    }
+    // if (input.height_min && input.height_max && parseInt(input.height_max) > parseInt(input.height_min)) {
+    //     errors.height_min = '';
+    //     errors.height_max = '';
+    // }
     // WEIGHT (2 - 100 kg) -------------------------------------------------------------------------------------------------------
-    else if (!input.weight_min) {
+    if (!input.weight_min || input.weight_min && parseInt(input.weight_min) < 2 || parseInt(input.weight_min) > 100) {
         errors.weight_min = 'A numerical value between 2 and 100 is expected';
     }
-    else if (input.weight_min && (!/\d/.test(input.weight_min) || parseInt(input.weight_min) < 2 || parseInt(input.weight_min) > 100)) {
-        errors.weight_min = 'A numerical value between 2 and 100 is expected';
-    }
-    else if (!input.weight_max) {
+    if (!input.weight_max || input.weight_max && parseInt(input.weight_max) < 2 || parseInt(input.weight_max) > 100) {
         errors.weight_max = 'A numerical value between 2 and 100 is expected';
     }
-    else if (input.weight_max && (!/\d/.test(input.weight_max) || parseInt(input.weight_max) < 2 || parseInt(input.weight_max) > 100)) {
-        errors.weight_max = 'A numerical value between 2 and 100 is expected';
-    }
-    else if (parseInt(input.weight_max) <= parseInt(input.weight_min)) {
+    if (input.weight_min && input.weight_max && parseInt(input.weight_max) < parseInt(input.weight_min)) {
         errors.weight_max = 'Maximum weight is expected to be greater than minimum';
     }
-    else if (input.weight_min && input.weight_max && (parseInt(input.weight_max) > parseInt(input.weight_min))) {
-        errors.weight_min = '';
-        errors.weight_max = '';
-    }
+    // if (input.weight_min && input.weight_max && parseInt(input.weight_max) > parseInt(input.weight_min)) {
+    //     errors.weight_min = '';
+    //     errors.weight_max = '';
+    // }
     // TEMPERAMENTS (se requiere al menos uno)
-    else if (input.temperaments.length === 0) {
+    if (input.temperaments.length < 1) {
         errors.temperaments = 'Choosing at least one temperament is required';
     }
-    else {
-        errors.temperaments = '';
-    }
+    // if (input.temperaments.length > 0) {
+    //     errors.temperaments = '';
+    // }
     return errors;
 }
 
@@ -91,7 +65,6 @@ export default function BreedCreate() {
     const history = useHistory();
     const allTemperaments = useSelector((state) => state.temperaments);
     const [errors, setErrors] = useState({});
-    // const [disabled, setDisabled] = useState(true);
     const [input, setInput] = useState({
         name: '',
         height_min: '',
@@ -127,23 +100,25 @@ export default function BreedCreate() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        // setErrors(validate({
-        //     ...input,
-        //     [e.target.name]: e.target.value
-        // }))
-        dispatch(postBreed(input));
-        alert('Raza creada con exito!');
-        setInput({
-            name: '',
-            height_min: '',
-            height_max: '',
-            weight_min: '',
-            weight_max: '',
-            image: '',
-            yearsOfLife: '',
-            temperaments: []
-        })
-        history.push('/home');
+        setErrors(validate(input))
+        if (Object.keys(errors).length > 0) {
+            alert('Quedan campos por completar!')
+        }
+        else {
+            dispatch(postBreed(input));
+            alert('Raza creada con exito!');
+            setInput({
+                name: '',
+                height_min: '',
+                height_max: '',
+                weight_min: '',
+                weight_max: '',
+                image: '',
+                yearsOfLife: '',
+                temperaments: []
+            })
+            history.push('/home');
+        }
     }
 
     function handleDelete(temp) {
@@ -156,19 +131,6 @@ export default function BreedCreate() {
     useEffect(() => {
         dispatch(getTemperaments());
     }, [dispatch]);
-
-    // function validarForm(errors) {
-    //     let valid = true;
-    //     Object.values(errors).forEach((val) => val.length > 0 && (valid = false)
-    //     );
-    //     if (valid) {
-    //         setDisabled(false)
-    //     } else {
-    //         setDisabled(true)
-    //     }
-    // }
-
-    // validarForm(errors);
 
     return (
         <div>
@@ -196,7 +158,7 @@ export default function BreedCreate() {
                         <div className={style.height_min}>
                             <label>Height min (cm.): </label>
                             <input
-                                type='text'
+                                type='number'
                                 value={input.height_min}
                                 name='height_min'
                                 required
@@ -209,7 +171,7 @@ export default function BreedCreate() {
                         <div className={style.height_max}>
                             <label>Height max (cm.): </label>
                             <input
-                                type='text'
+                                type='number'
                                 value={input.height_max}
                                 name='height_max'
                                 required
@@ -222,7 +184,7 @@ export default function BreedCreate() {
                         <div className={style.weight_min}>
                             <label>Weight min (kg.): </label>
                             <input
-                                type='text'
+                                type='number'
                                 value={input.weight_min}
                                 name='weight_min'
                                 required
@@ -235,7 +197,7 @@ export default function BreedCreate() {
                         <div className={style.weight_max}>
                             <label>Weight max (kg.): </label>
                             <input
-                                type='text'
+                                type='number'
                                 value={input.weight_max}
                                 name='weight_max'
                                 required
@@ -267,7 +229,11 @@ export default function BreedCreate() {
                                 onChange={(e) => handleChange(e)}
                             />
                         </div>
-                        <input disabled={false} value='Create Breeds' className={style.boton} type='submit' />
+                        {/* {console.log('estado errores',errors)}
+                        {Object.keys(errors).length > 0 ? <input disabled value='Create Breeds' className={style.boton} type='submit' />
+                            : */}
+                            <input value='Create Breeds' className={style.boton} type='submit' /> 
+                        {/* } */}
                     </div>
 
                     {/* //-------------------------------------------------------------------------------------------------------------------- */}
@@ -289,7 +255,7 @@ export default function BreedCreate() {
                         {
                             input.temperaments.map((temp, index) => {
                                 let aux = allTemperaments.filter(e => e.id == temp);
-                                return <div className={style.contenedor_final}>
+                                return <div key={index} className={style.contenedor_final}>
                                     <div className={style.contenedor_temperamento_seleccionado} key={index}>
                                         <h4 className={style.temperamento_seleccionado} >{aux[0].name}</h4>
                                         <button className={style.boton_temperamento_seleccionado} onClick={() => handleDelete(temp)}>x</button>

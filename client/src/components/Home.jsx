@@ -12,7 +12,6 @@ export default function Home() {
 
     const dispatch = useDispatch(); // Esto es lo mismo que hacer mapDispatchToProps()
     const allBreeds = useSelector((state) => state.breeds); // Esto es lo mismo que hacer el mapStateToProps()
-    // const allTemperaments = useSelector((state) => state.temperaments); // Esto es lo mismo que hacer el mapStateToProps()
 
     const [loading, setLoading] = useState(true);
     const [orden, setOrden] = useState('');
@@ -22,7 +21,7 @@ export default function Home() {
     const indexOfLastBreed = currentPage * breedsPerPage; // Indice de la ultima raza
     const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; // Indice de la primer raza
     const currentBreeds = allBreeds.slice(indexOfFirstBreed, indexOfLastBreed); // Razas que voy a tener en la pagina actual
-    const paged = (pageNumber) => {
+    const paged = (pageNumber) => { // Funcion que setea la pagina actual
         setCurrentPage(pageNumber);
     }
 
@@ -112,19 +111,31 @@ export default function Home() {
                                 id={e.id}
                             />)
                         }
-                        else if (e.temperaments.length) { // Si es de la DB
-                            let aux = e.temperaments[0].name;
-                            for (let i = 1; i < e.temperaments.length; i++) {
-                                aux = aux + ', ' + e.temperaments[i].name;
+                        else if (e.temperaments) {
+                            if (e.temperaments.length) { // Si es de la DB
+                                let aux = e.temperaments[0].name;
+                                for (let i = 1; i < e.temperaments.length; i++) {
+                                    aux = aux + ', ' + e.temperaments[i].name;
+                                }
+                                return (<Card
+                                    name={e.name}
+                                    image={e.image}
+                                    temperament={aux}
+                                    weight={e.weight}
+                                    key={e.id}
+                                    id={e.id}
+                                />)
                             }
-                            return (<Card
-                                name={e.name}
-                                image={e.image}
-                                temperament={aux}
-                                weight={e.weight}
-                                key={e.id}
-                                id={e.id}
-                            />)
+                            else {
+                                return (<Card
+                                    name={e.name}
+                                    image={e.image}
+                                    temperament={'No tengo personalidad'}
+                                    weight={e.weight}
+                                    key={e.id}
+                                    id={e.id}
+                                />)
+                            }
                         }
                         else { // Si es de la API (sin temperamento)
                             return (<Card
@@ -138,7 +149,7 @@ export default function Home() {
                         }
                     })
                         : <div className={style.loading} >
-                            <h2>No se encontro el nombre buscado!</h2>
+                            <h2>The searched name was not found!</h2>
                         </div>
                     }
                 </div>
